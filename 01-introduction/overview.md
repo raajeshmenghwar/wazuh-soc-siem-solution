@@ -31,9 +31,8 @@ In a SOC environment, Wazuh helps security teams:
 **Wazuh Architecture** refers to how different components are connected and work together. It’s a modular system that scales from a single server to hundreds of endpoints.
 
 
-```markdown
-![Wazuh Architecture](../../assets/deployment-architecture1.png)
-```
+![Wazuh Architecture](../assets/deployment-architecture1.png)
+
 
 Architecture flow:
 
@@ -60,9 +59,8 @@ Simple analogy:
 While architecture defines how parts are connected, components are the actual tools that make up the Wazuh system. Below are the core components of Wazuh:
 
 
-```markdown
-![Wazuh Components](../../assets/wazuh-components-and-data-flow1.png)
-```
+![Wazuh Components](../assets/wazuh-components-and-data-flow1.png)
+
 
 ### 1. Wazuh Agent
 
