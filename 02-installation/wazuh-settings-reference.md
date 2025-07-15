@@ -1,6 +1,6 @@
 # Wazuh Settings Reference for Beginners
 
-This guide introduces essential configuration files, service commands, and troubleshooting steps for managing a Wazuh SIEM setup. It's written for students and SOC interns setting up a lab environment using Wazuh 4.x+.
+This guide introduces essential configuration files, service commands, and troubleshooting steps for managing a Wazuh SIEM setup. 
 
 ---
 
@@ -8,15 +8,9 @@ This guide introduces essential configuration files, service commands, and troub
 
 ### 1. `ossec.conf`
 
-| Item | Detail |
-|------|--------|
-| **Purpose** | Main configuration file for Wazuh Manager and Agents |
-| **Location** | `/var/ossec/etc/ossec.conf` |
-| **Format** | XML |
-
-#### What it Does
-
-Controls nearly everything: log collection, rules to load, remote agent communication, alert settings, email notifications, active responses, and more.
+- **Purpose:** Main configuration file for Wazuh Manager and Agents.
+- **Location:** `/var/ossec/etc/ossec.conf`
+- **What it Does:** Controls nearly everything: log collection, rules to load, remote agent communication, alert settings, email notifications, active responses, and more.
 
 #### Key Concepts
 
@@ -112,24 +106,6 @@ xmllint /var/ossec/etc/ossec.conf --noout
 | Restart | `sudo systemctl restart wazuh-manager` | Reloads config and rules         |
 | Status  | `sudo systemctl status wazuh-manager`  | Check if it's running            |
 | Logs    | `sudo journalctl -u wazuh-manager`     | View service logs for issues     |
-
----
-
-### Common Flow Example
-
-```bash
-# Start the manager
-sudo systemctl start wazuh-manager
-
-# Check if it's active
-sudo systemctl status wazuh-manager
-
-# After changes to configs or rules
-sudo systemctl restart wazuh-manager
-
-# View logs
-sudo journalctl -u wazuh-manager
-```
 
 ---
 

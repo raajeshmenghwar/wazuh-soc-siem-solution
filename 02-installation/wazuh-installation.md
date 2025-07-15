@@ -1,30 +1,77 @@
-# Wazuh SIEM Installation Guide (Wazuh 4.x+ All-in-One)
+# **Wazuh SIEM Installation Guide (Wazuh 4.x+ All-in-One)**
 
-## Overview
+## **Overview**
 
-Wazuh is an open-source Security Information and Event Management (SIEM) platform. Starting from version 4.x, Wazuh provides an integrated solution that includes:
+**Wazuh** is a leading open-source **Security Information and Event Management (SIEM)** platform that provides unified security visibility and threat detection across endpoints, cloud workloads, and on-premises infrastructure.
 
-- **Wazuh Manager**: Collects, analyzes, and correlates security data.
-- **Wazuh Indexer**: Stores and indexes alerts and events (replaces Elasticsearch).
-- **Wazuh Dashboard**: Web interface for monitoring and managing security events (replaces Kibana).
+With the release of **version 4.x and above**, Wazuh introduced a **fully integrated technology stack**, offering the following core components:
 
-## Why No More Separate Kibana/Elasticsearch?
+* **Wazuh Manager**: Collects, analyzes, and correlates logs and events.
+* **Wazuh Indexer**: Efficiently stores and indexes data (built on OpenSearch; replaces Elasticsearch).
+* **Wazuh Dashboard**: A powerful web-based interface for managing alerts and visualizing security data (replaces Kibana).
 
-In Wazuh 4.x+, the platform ships with its own **Wazuh Indexer** and **Wazuh Dashboard**. This eliminates the need to install and configure Elasticsearch and Kibana separately, simplifying deployment and ensuring compatibility.
+---
 
-## Wazuh Setup: Pre-4.x vs Post-4.x
+## **Highly Recommended: Quick All-in-One Installation (Ideal for Labs and Quick Deployments)**
 
-| Feature/Component         | Pre-4.x (Manual ELK)         | Post-4.x (Integrated)         |
-|--------------------------|------------------------------|-------------------------------|
-| Data Indexing            | Elasticsearch (manual)        | Wazuh Indexer (bundled)       |
-| Web UI                   | Kibana (manual)               | Wazuh Dashboard (bundled)     |
-| Installation Complexity  | High (multiple components)    | Low (single package)          |
-| Updates                  | Separate for each component   | Unified updates               |
-| Official Support         | Limited for ELK integration   | Full support for all parts    |
+The **official Wazuh quick installation script** is the most recommended method for deploying Wazuh in **test or evaluation environments**. It significantly reduces setup time and installs all essential components:
 
-## Step-by-Step Installation (All-in-One)
+* Wazuh Manager
+* Wazuh Indexer (OpenSearch-based)
+* Wazuh Dashboard
+* Filebeat (log shipper)
 
-### 1. Add the Wazuh Repository
+### 🔹 **Installation Steps**
+
+```bash
+curl -sO https://packages.wazuh.com/4.8/wazuh-install.sh
+chmod +x wazuh-install.sh
+sudo ./wazuh-install.sh --wazuh-manager --indexer --dashboard
+```
+
+> Takes approximately 10–15 minutes depending on system and network speed.
+
+### 🔹 **Access the Wazuh Dashboard**
+
+* Open your browser: `https://<your_server_ip>:5601`
+* Default credentials:
+
+  * **Username**: `admin`
+  * **Password**: `admin`
+
+**Change the default password** after first login using the CLI:
+
+```bash
+/usr/share/wazuh-dashboard/plugins/wazuh/wazuh-passwords-tool.sh -a
+```
+
+📘 [Quick Install Script – Official Docs](https://documentation.wazuh.com/current/installation-guide/wazuh-installation-packages/wazuh-install-script.html)
+
+---
+
+## **Why No More Separate Kibana/Elasticsearch?**
+
+Wazuh 4.x+ ships with its **own indexer and dashboard**, removing the need to manually install or configure Elasticsearch and Kibana. This ensures:
+
+* Simplified deployment
+* Reduced compatibility issues
+* Unified maintenance and support
+
+| Feature/Component | Pre-4.x (ELK Stack)        | Post-4.x (Integrated Stack)   |
+| ----------------- | -------------------------- | ----------------------------- |
+| Indexing          | Elasticsearch (manual)     | Wazuh Indexer (bundled)       |
+| Dashboard UI      | Kibana (manual)            | Wazuh Dashboard (bundled)     |
+| Deployment        | Complex (multiple systems) | Simplified (single script)    |
+| Updates           | Separate per component     | Unified update management     |
+| Support Scope     | Partial                    | Full (end-to-end Wazuh stack) |
+
+---
+
+## **Alternative Manual Installation (Advanced/Production Customization)**
+
+For users who require fine-grained control or production-grade environments, Wazuh can also be installed manually by adding the Wazuh APT repository.
+
+### **Step 1: Add the Wazuh Repository**
 
 ```bash
 curl -sO https://packages.wazuh.com/key/GPG-KEY-WAZUH
@@ -33,17 +80,25 @@ echo "deb https://packages.wazuh.com/4.x/apt/ stable main" | sudo tee /etc/apt/s
 sudo apt-get update
 ```
 
-### 2. Install the Wazuh All-in-One Package
+[Repository Setup – Official Docs](https://documentation.wazuh.com/current/installation-guide/packages-list.html)
+
+---
+
+### **Step 2: Install Core Components**
 
 ```bash
 sudo apt-get install wazuh-manager wazuh-indexer wazuh-dashboard
 ```
 
-- `wazuh-manager`: Core analysis engine
-- `wazuh-indexer`: Data storage and search
-- `wazuh-dashboard`: Web interface
+**Roles of Each Component:**
 
-### 3. Start and Enable Services
+* `wazuh-manager`: Core event collection, rule engine, and correlation.
+* `wazuh-indexer`: Stores and searches event data (OpenSearch backend).
+* `wazuh-dashboard`: Web UI for visualization and configuration.
+
+---
+
+###  **Step 3: Start and Enable Services**
 
 ```bash
 sudo systemctl enable --now wazuh-manager
@@ -51,24 +106,52 @@ sudo systemctl enable --now wazuh-indexer
 sudo systemctl enable --now wazuh-dashboard
 ```
 
-### 4. Access the Wazuh Dashboard
+---
 
-- Open your browser and go to: [https://<your-server-ip>:5601](https://<your-server-ip>:5601)
-- Default port: **5601**
-- Default credentials: `admin` / `admin` (change after first login)
+### **Step 4: Access the Dashboard**
 
-### 5. Troubleshooting Common Startup Errors
+Visit: `https://<your_server_ip>:5601`
+Default credentials:
 
-- **Service not starting**: Check logs with `sudo journalctl -u wazuh-manager` (or `wazuh-indexer`, `wazuh-dashboard`).
-- **Port conflicts**: Ensure ports 5601 (dashboard), 9200 (indexer), and 1514/1515 (manager) are free.
-- **Firewall issues**: Open required ports in your firewall.
+* **admin / admin**
 
-### 6. Alternative Installations (Lab/Testing)
+Change password securely using:
 
-- **Docker**: Use the official [Wazuh Docker images](https://documentation.wazuh.com/current/installation-guide/installing-wazuh/docker.html) for quick lab setups.
-- **OVA Image**: Download a pre-built virtual appliance for rapid deployment in virtualization environments.
+```bash
+/usr/share/wazuh-dashboard/plugins/wazuh/wazuh-passwords-tool.sh -a
+```
 
-## References
+---
 
-- [Wazuh Official Documentation](https://documentation.wazuh.com/current/)
-- [Wazuh Installation Guide](https://documentation.wazuh.com/current/installation-guide/index.html)
+##  **Troubleshooting Tips**
+
+| Problem                          | Recommended Action                                         |
+| -------------------------------- | ---------------------------------------------------------- |
+| Services not starting            | Use `journalctl -u <service_name>` to inspect logs         |
+| Dashboard not accessible         | Confirm port `5601` is open and no firewall is blocking it |
+| Port conflicts                   | Check if ports `1514/1515`, `9200`, or `5601` are in use   |
+| Certificate issues (self-signed) | Use provided defaults or upload custom certs in production |
+
+---
+
+## **Alternative Installation Methods (For Testing/Labs)**
+
+Wazuh also offers official alternatives to suit different environments:
+
+### [Docker-based Deployment](https://documentation.wazuh.com/current/installation-guide/docker/index.html)
+
+Deploy Wazuh components quickly using Docker Compose. Suitable for CI/CD, dev, or lab environments.
+
+### [OVA Virtual Appliance](https://documentation.wazuh.com/current/installation-guide/ova/index.html)
+
+Download a pre-configured VirtualBox/VMware appliance for plug-and-play deployment.
+
+---
+
+## **References & Resources**
+
+* [Official Wazuh Documentation](https://documentation.wazuh.com/current/index.html)
+* [Quick Install Script](https://documentation.wazuh.com/current/installation-guide/wazuh-installation-packages/wazuh-install-script.html)
+* [All-in-One Installation Guide](https://documentation.wazuh.com/current/installation-guide/all-in-one/index.html)
+* [Distributed Architecture Guide](https://documentation.wazuh.com/current/installation-guide/distributed-deployment/index.html)
+
