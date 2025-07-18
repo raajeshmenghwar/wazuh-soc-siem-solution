@@ -1,42 +1,51 @@
-# Custom Branding: Customizing Login Page Background
+# Customizing the Wazuh Login Page Background
 
-This guide details how to update the login background image of the Wazuh Dashboard.
+This guide explains how to update the login page background image for the Wazuh Dashboard.
 
 ---
 
-## 1. Background File Location
+## 1. Locate the Login Background File
+
+Navigate to the asset directory containing the login page background:
+
 ```bash
-cd /usr/share/wazuh-dashboard/src/core/server/core_app/assets
-````
+cd /usr/share/wazuh-dashboard/src/core/server/core_app/assets/
+```
 
-### Locate Background File
-
-Look for the file:
+The default file is:
 
 ```bash
 wazuh_login_bg.svg
 ```
 
-### Backup Original File
+---
+
+## 2. Backup the Original Background
+
+Create a backup of the original file before replacing it:
 
 ```bash
 mv wazuh_login_bg.svg wazuh_login_bg.svg.bak
 ```
 
-### Replace with Custom Image
+---
 
-Download or create your own SVG image:
+## 3. Replace with a Custom Background
+
+Upload your custom SVG file and rename it:
 
 ```bash
-mv my-background.svg wazuh_login_bg.svg
+mv custom-login-background.svg wazuh_login_bg.svg
 ```
+
+Make sure the image is in SVG format for full compatibility.
 
 ---
 
-## 2. Restart Dashboard to Apply Changes
+## 4. Restart the Wazuh Dashboard
 
 ```bash
 sudo systemctl restart wazuh-dashboard
 ```
 
-> For consistent results, clear browser cache before reloading the login page.
+Reload the login page in your browser. Clear cache if the old background is still displayed.

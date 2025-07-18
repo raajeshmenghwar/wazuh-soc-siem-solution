@@ -1,108 +1,47 @@
-# Custom Branding: Changing Logo and Favicon
+# Changing the Wazuh Dashboard Logo
 
-This guide walks you through replacing the Wazuh Dashboard's default logo and favicon with your own branding assets.
+## 1. Navigate to the Logo Directory
 
----
-
-## 1. Replace Dashboard Logo
-
-### Location
-```bash
-cd /usr/share/wazuh-dashboard/plugins/securityDashboards/target/public/
-````
-
-Inside this directory, you will find a `.svg` file (e.g., `30e500f584235c2912f16c790345f966.svg`) that serves as the default logo.
-
-### Backup Original
-
-```bash
-mv 30e500f584235c2912f16c790345f966.svg 30e500f584235c2912f16c790345f966.svg.bak
-```
-
-### Replace with Custom Logo
-
-Download or copy your own `.svg` logo and rename it to match the original filename:
-
-```bash
-mv my-custom-logo.svg 30e500f584235c2912f16c790345f966.svg
-```
-![Replace Dashboard Logo](../assets/Replace_Dashboard_Logo.png)
-
----
-# Custom Branding: Changing Logo and Favicon
-
-This guide walks you through replacing the Wazuh Dashboard's default logo and favicon with your own branding assets.
-
----
-
-## 1. Replace Dashboard Logo
-
-### Location
+The default logo is located inside the Wazuh dashboard plugin directory:
 
 ```bash
 cd /usr/share/wazuh-dashboard/plugins/securityDashboards/target/public/
 ```
 
-Inside this directory, you will find a `.svg` file (e.g., `30e500f584235c2912f16c790345f966.svg`) that serves as the default logo.
+This folder contains an SVG file (e.g., `30e500f584235c2912f16c790345f966.svg`) used as the Wazuh dashboard logo.
 
-### Backup Original
+---
+
+## 2. Backup the Original Logo
+
+It is good practice to back up the existing file before making changes:
 
 ```bash
 mv 30e500f584235c2912f16c790345f966.svg 30e500f584235c2912f16c790345f966.svg.bak
 ```
 
-### Replace with Custom Logo
+This command renames the original file with a `.bak` extension for safekeeping.
 
-Download or copy your own `.svg` logo and rename it to match the original filename:
+---
+
+## 3. Replace with a Custom Logo
+
+Upload your own SVG logo to the server and rename it to the original filename to ensure the dashboard uses it:
 
 ```bash
 mv my-custom-logo.svg 30e500f584235c2912f16c790345f966.svg
 ```
 
----
-
-## 2. Change Favicon (Browser Tab Icon)
-
-### Location
-
-```bash
-cd /usr/share/wazuh-dashboard/src/core/server/core_app/assets/favicons
-```
-
-### Backup Existing Favicons
-
-Instead of moving them to another directory, simply rename each file with a `.bak` extension:
-
-```bash
-for file in *; do mv "$file" "$file.bak"; done
-```
-
-### Generate and Use Custom Favicons
-
-Use [https://realfavicongenerator.net/](https://realfavicongenerator.net/) to upload your logo and generate a favicon package.
-
-1. Upload your logo on the site.
-2. Download the `.zip` file containing the generated favicons.
-3. Unzip the package:
-
-   ```bash
-   unzip favicon_package.zip
-   ```
-
-4. Copy the relevant favicon files into the `favicons/` directory:
-
-   ```bash
-   cp favicon.ico android-chrome*.png apple-touch-icon*.png mstile-*.png /usr/share/wazuh-dashboard/src/core/server/core_app/assets/favicons/
-   ```
-
-> Ensure the filenames of the new icons match the original ones, or the dashboard may not load them correctly.
+Ensure the new logo is in SVG format and matches the dimensions and style of the original.
 
 ---
 
-## 3. Restart Wazuh Dashboard
+## 4. Restart the Wazuh Dashboard
 
-After making the changes:
+To apply the changes:
 
 ```bash
 sudo systemctl restart wazuh-dashboard
 ```
+
+This restarts the dashboard service so it can load the new logo.
