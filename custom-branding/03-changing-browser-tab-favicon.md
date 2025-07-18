@@ -45,7 +45,7 @@ unzip favicon_package.zip
 ```bash
 cp favicon.ico *.png *.xml *.json /usr/share/wazuh-dashboard/src/core/server/core_app/assets/favicons/
 ```
-
+![Favicon](../assets/Change_Favicon.png)
 ---
 
 ## 4. Restart the Wazuh Dashboard
@@ -55,3 +55,4 @@ sudo systemctl restart wazuh-dashboard
 ```
 
 The new favicon should now appear in your browser tab.
+
