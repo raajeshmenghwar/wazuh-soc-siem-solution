@@ -1,47 +1,96 @@
-# Email Alerting Integration with Wazuh
+# 02\_Email\_Integration.md
 
-This guide explains how to configure Wazuh to send alerts via email using Postfix and Gmail SMTP.
+## Email Alerting via Postfix in Wazuh
 
----
-
-## Prerequisites
-
-- A working Wazuh Manager
-- Postfix installed on the server
-- Gmail account (preferably a dedicated alerting account)
+Setting up email alerts in Wazuh helps you stay informed about critical events in your environment. This guide outlines how to configure Wazuh to send professional-grade email alerts.
 
 ---
 
-## ✉️ Step-by-Step Setup
+## Requirements
 
-### 1. Configure Gmail SMTP Credentials
+* Wazuh Manager
+* A working internet connection
+* A Gmail (or similar SMTP-supported) account with App Password configured
+* A basic Postfix setup
 
-Create `/etc/postfix/sasl_passwd`:
+---
+
+## What is Postfix?
+
+Postfix is a Mail Transfer Agent (MTA) used to route and deliver email. In our case, Postfix will act as the local relay to securely send alert emails using a third-party SMTP service (like Gmail).
+
+### Why Postfix?
+
+* Lightweight and secure
+* Open-source and widely supported
+* Easy integration with Wazuh
+
+### Alternatives to Postfix
+
+* **Sendmail**: A more complex and older MTA
+* **Exim**: Popular on Debian systems
+* **MSMTP**: Lightweight SMTP client
+
+> Postfix is recommended due to its stability and simplicity.
+
+---
+
+## Step-by-Step Setup
+
+### 1. Install Postfix
 
 ```bash
-[smtp.gmail.com]:587 raajeshkumar2109@gmail.com:your_app_password
-````
+sudo apt update
+sudo apt install postfix mailutils -y
+```
 
-Replace `your_app_password` with a valid **App Password** generated from Google.
+> During installation, choose "Internet Site" and use your system's FQDN as the mail name.
 
-### 2. Secure the Credentials
+---
+
+### 2. Configure Gmail App Password
+
+Since Gmail restricts direct SMTP access from third-party apps:
+
+1. Go to [Google Account > Security](https://myaccount.google.com/security)
+2. Enable 2FA (Two-Factor Authentication)
+3. Generate an **App Password** under "App Passwords"
+4. Save this password securely (do **not** share it)
+
+> 📸 *Screenshot: App password creation step*
+
+---
+
+### 3. Configure Postfix to Use SMTP
+
+Edit or create the file `/etc/postfix/sasl_passwd`:
+
+```ini
+[smtp.gmail.com]:587 alert@indussystems.com:your_app_password_here
+```
+
+> 📸 *Screenshot: Sample configuration*
+
+Then run:
 
 ```bash
 sudo postmap /etc/postfix/sasl_passwd
 sudo chmod 600 /etc/postfix/sasl_passwd*
+sudo systemctl restart postfix
 ```
 
-### 3. Update Postfix Configuration
+---
 
-Append to `/etc/postfix/main.cf`:
+### 4. Add Relay Settings to `main.cf`
 
-```ini
+Edit `/etc/postfix/main.cf` and add:
+
+```conf
 relayhost = [smtp.gmail.com]:587
+smtp_use_tls = yes
 smtp_sasl_auth_enable = yes
 smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
 smtp_sasl_security_options = noanonymous
-smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
-smtp_use_tls = yes
 ```
 
 Restart Postfix:
@@ -50,148 +99,69 @@ Restart Postfix:
 sudo systemctl restart postfix
 ```
 
+> 📸 *Screenshot: Final `main.cf` entries*
+
 ---
 
-## Test Email Functionality
+### 5. Test Mail
 
 ```bash
-echo "Test email from Wazuh" | mail -s "Wazuh Test Email" your_email@gmail.com
+echo "This is a test mail" | mail -s "Wazuh Email Test" reviewer_email@gmail.com
 ```
+
+If received successfully, your Postfix is working.
 
 ---
 
-## 🛠️ Configure Wazuh to Send Email Alerts
+## Configure Wazuh to Send Email Alerts
 
-Edit `/var/ossec/etc/ossec.conf`:
+### 1. Modify `ossec.conf`
+
+Add inside the `<global>` section:
 
 ```xml
-<global>
-  <email_notification>yes</email_notification>
-  <email_to>your_email@gmail.com</email_to>
-  <smtp_server>127.0.0.1</smtp_server>
-  <email_from>wazuh@indussystems.local</email_from>
-</global>
+<email_notification>yes</email_notification>
+<email_to>reviewer_email@gmail.com</email_to>
+<email_from>alert@indussystems.com</email_from>
+<smtp_server>127.0.0.1</smtp_server>
 ```
 
----
+> 📸 *Screenshot: Modified `ossec.conf` email section*
 
-## 📌 Notes
-
-* **Only critical alerts** are sent by default (level ≥ 7).
-* You can tune rules for specific alert levels or groups.
-
----
-
-## 🧪 Test Rule with EICAR
-
-You can use the **EICAR test file** to trigger an alert:
+Restart the manager:
 
 ```bash
-curl -o eicar.txt https://secure.eicar.org/eicar.com.txt
+sudo systemctl restart wazuh-manager
 ```
 
 ---
 
-## 🎯 Tips
+### 2. Trigger an Alert (EICAR or Failed SSH Login)
 
-| Tip                | Details                                              |
-| ------------------ | ---------------------------------------------------- |
-| Use branded domain | e.g., `alerts@indussystems.com` for professionalism. |
-| Enable DKIM/DMARC  | For email deliverability.                            |
-
----
-
-### ✅ `05_custom_python_alerting.md`
-
-```markdown
-# Custom Alerting with Python Integrations in Wazuh
-
-Wazuh supports Python-based alerting integrations through its `/var/ossec/integrations/` directory. This is ideal for sending alerts to custom APIs, dashboards, or styled emails.
-
----
-
-## 📂 Directory Overview
-
-| Path                             | Purpose                         |
-|----------------------------------|---------------------------------|
-| `/var/ossec/integrations/`       | Stores Python and bash scripts |
-| `.py` files                      | Python-based alert integrations |
-
----
-
-## 🧱 Basic Structure of a Python Integration Script
-
-```python
-#!/usr/bin/env python3
-
-import sys
-import json
-
-def send_alert(alert_data):
-    # Custom logic to send email or webhook
-    print("Alert:", alert_data['rule']['description'])
-
-if __name__ == "__main__":
-    alert = json.loads(sys.stdin.read())
-    send_alert(alert)
-````
-
-Make the script executable:
+To test:
 
 ```bash
-chmod +x /var/ossec/integrations/my_alert.py
+echo "X5O!P%@AP[4\PZX54(P^)7CC)7}\$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!" > /tmp/eicar.com
 ```
 
----
-
-## 🛠️ Configure ossec.conf
-
-Add integration:
-
-```xml
-<integration>
-  <name>my_alert</name>
-  <hook_url>https://my.custom.url/</hook_url>
-  <alert_format>json</alert_format>
-  <level>10</level>
-</integration>
-```
-
----
-
-## 📧 Advanced: HTML Email Integration with Logo
-
-Use libraries:
+Or try failed SSH login attempts:
 
 ```bash
-pip install yagmail jinja2
-```
-
-Python Example (simplified):
-
-```python
-import yagmail
-from jinja2 import Template
-
-template = Template(open('template.html').read())
-html = template.render(alert=alert_data)
-
-yag = yagmail.SMTP("your_email@gmail.com", "app_password")
-yag.send(to="receiver@example.com", subject="Wazuh Alert", contents=html)
+ssh fakeuser@localhost
 ```
 
 ---
 
-## 📁 Online Templates
+## Notes on Email Format
 
-* [Stripo.email](https://stripo.email)
-* [Mailchimp Templates](https://mailchimp.com/email-templates/)
-* [ReallyGoodEmails](https://reallygoodemails.com)
+The default Wazuh alert emails are plaintext and not well-formatted. For a more professional look:
+
+* Use a Python script in `/var/ossec/integrations` to format email (See `05_custom_python_alerting.md`)
+* Customize headers and footers
+* Add logos, styled HTML content
+
+> 📸 *Screenshot: Sample custom email alert*
 
 ---
 
-## ✅ Tips
-
-* Validate all custom scripts.
-* Always set `<alert_format>json</alert_format>`.
-* You can reuse data from `/var/ossec/logs/alerts/alerts.json`.
+Continue with [Slack Integration](03_slack_integration.md) or [Telegram Bot Integration](04_telegram_integration.md) for multi-channel alerts.

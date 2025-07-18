@@ -1,62 +1,46 @@
-# Alerting System Overview in Wazuh
+# 01\_Overview\_Alerting.md
 
-Wazuh is a powerful open-source Security Information and Event Management (SIEM) tool. One of its core capabilities is **alerting**, which informs administrators of security events that require attention.
+## Alerting in Wazuh
 
-This document provides an overview of how Wazuh's alerting system works, its components, and what options are available for customization.
-
----
-
-##  What is an Alert?
-
-An **alert** is a notification generated when Wazuh detects an event that matches a specific rule defined in its configuration.
+Wazuh provides a powerful and extensible alerting framework that enables organizations to receive real-time notifications of security events, anomalies, and other important system events. These alerts help security analysts take immediate action and improve incident response.
 
 ---
 
-##  Alert Components
+## Types of Integrations
 
-| Component       | Description                                                                 |
-|----------------|-----------------------------------------------------------------------------|
-| Rule ID         | The ID associated with the triggered rule.                                 |
-| Alert Level     | A severity level from 0 (informational) to 15 (critical).                   |
-| Source Log      | The raw log data that caused the alert.                                    |
-| Rule Description| The human-readable message explaining the alert.                           |
-| Integration     | Method by which the alert is forwarded (e.g., email, Slack, webhook, etc). |
+Wazuh supports multiple third-party integrations for alerting and automated responses. Here are some commonly used alerting options:
 
----
-
-##  Alert Lifecycle
-
-1. **Log Collection** – Wazuh agents collect logs from endpoints.
-2. **Decoding** – Logs are normalized using decoders.
-3. **Rule Matching** – Rules are applied to decoded logs.
-4. **Alert Generation** – If a rule matches, an alert is generated.
-5. **Notification Sent** – Based on configuration, alerts are forwarded.
+* [Email Integration](02_email_integration.md): Send alerts directly to your organization’s inbox.
+* [Slack Integration](03_slack_integration.md): Send alerts to specific Slack channels to notify teams.
+* [Telegram Bot Integration](04_telegram_integration.md): Receive alerts via a Telegram bot for real-time mobile updates.
+* Webhook Integrations: For pushing alerts to custom web services.
+* SIEM Tools: Integration with tools like Splunk, Elastic Stack.
+* Ticketing Systems: Integration with platforms like TheHive and ServiceNow.
 
 ---
 
-##  Important Files
+## Why Integrate Alerting?
 
-| File/Directory                   | Purpose                                |
-|----------------------------------|----------------------------------------|
-| `/var/ossec/etc/rules`           | Custom and pre-defined rules.          |
-| `/var/ossec/logs/alerts/alerts.json` | Raw alerts in JSON format.            |
-| `/var/ossec/etc/ossec.conf`      | Core configuration, including alerting.|
+Effective alerting ensures:
 
----
+* Real-time detection of critical threats.
+* Faster incident response.
+* Centralized monitoring.
+* Reduced manual log reviews.
 
-##  Alerting Use Cases
-
-- Unauthorized access attempts
-- Malware execution detection
-- File integrity changes
-- Network port scanning
+Wazuh generates alerts based on rules defined in its ruleset. These alerts are customizable and can be filtered, tagged, or sent to specific external systems through integrations.
 
 ---
 
-##  Next Steps
+## How Alerts Work
 
-- Configure built-in integrations like Email.
-- Create custom alerting mechanisms.
-```
+1. **Event Detection**: Logs from agents are analyzed.
+2. **Rule Match**: If a rule matches, an alert is generated.
+3. **Alert Handling**: Alert is formatted and sent to the appropriate output (e.g., email, Slack).
 
 ---
+
+Refer to individual integration files for step-by-step instructions on each integration type.
+
+---
+
