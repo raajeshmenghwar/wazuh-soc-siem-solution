@@ -9,9 +9,7 @@ This guide explains how to upload logos for in-app areas like dashboards, report
 1. Log into the Wazuh Dashboard.
 2. Open the sidebar menu and navigate to:
 ````
-
 Dashboard Management → App Settings
-
 ````
 
 ---

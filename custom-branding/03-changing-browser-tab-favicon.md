@@ -56,3 +56,4 @@ sudo systemctl restart wazuh-dashboard
 
 The new favicon should now appear in your browser tab.
 
+![Favicon Changed](../assets/favicon-changed.png)
