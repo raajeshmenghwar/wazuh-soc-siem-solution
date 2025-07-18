@@ -47,6 +47,7 @@ You can host images via platforms like:
 Ensure that image links are direct and accessible via HTTPS.
 
 ---
+![Dashboard.yml](../assets/dashboardYML.png)
 
 ## 3. Restart Wazuh Dashboard
 
