@@ -32,9 +32,9 @@ Scroll down and click the `Save` button to apply settings.
 
 ---
 
-![alt text](image.png)
+![Custom Branding GUI](../assets/custom-branding-GUI-1.png)
 
-![Custom Branding GUI](../assets/custom-branding-GUI.png)
+![Custom Branding GUI](../assets/custom-branding-GUI-2.png)
 
 ## 4. Refresh or Restart
 
