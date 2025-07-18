@@ -49,3 +49,6 @@ sudo systemctl restart wazuh-dashboard
 ```
 
 Reload the login page in your browser. Clear cache if the old background is still displayed.
+
+
+![Customized-Login-Page](../assets/customized-login-page.png)
