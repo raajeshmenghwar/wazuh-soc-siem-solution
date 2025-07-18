@@ -33,7 +33,8 @@ mv my-custom-logo.svg 30e500f584235c2912f16c790345f966.svg
 ```
 
 Ensure the new logo is in SVG format and matches the dimensions and style of the original.
-
+ 
+![Replace Wazuh Custom Logo](../assets/Replace_Dashboard_Logo.png) 
 ---
 
 ## 4. Restart the Wazuh Dashboard
