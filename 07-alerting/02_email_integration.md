@@ -56,7 +56,7 @@ Since Gmail restricts direct SMTP access from third-party apps:
 4. Save this password securely (do **not** share it)
 
 > ![App password creation step](../assets/App%20password%20creation%20step.png)
-
+![App Password](../assets/App%20Password.png)
 ---
 
 ### 3. Configure Postfix to Use SMTP
