@@ -36,7 +36,24 @@ Wazuh generates alerts based on rules defined in its ruleset. These alerts are c
 2. **Rule Match**: If a rule matches, an alert is generated.
 3. **Alert Handling**: Alert is formatted and sent to the appropriate output (e.g., email, Slack).
 
----
+##  Alert Lifecycle
+
+- **Log Collection** – Wazuh agents collect logs from endpoints.
+- **Decoding** – Logs are normalized using decoders.
+- **Rule Matching** – Rules are applied to decoded logs.
+- **Alert Generation** – If a rule matches, an alert is generated.
+- **Notification Sent** – Based on configuration, alerts are forwarded.
+
+##  Alert Components
+
+| Component       | Description                                                                 |
+|----------------|-----------------------------------------------------------------------------|
+| Rule ID         | The ID associated with the triggered rule.                                 |
+| Alert Level     | A severity level from 0 (informational) to 15 (critical).                   |
+| Source Log      | The raw log data that caused the alert.                                    |
+| Rule Description| The human-readable message explaining the alert.                           |
+| Integration     | Method by which the alert is forwarded (e.g., email, Slack, webhook, etc). |
+
 
 Refer to individual integration files for step-by-step instructions on each integration type.
 
