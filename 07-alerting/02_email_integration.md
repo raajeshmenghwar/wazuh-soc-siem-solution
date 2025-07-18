@@ -55,7 +55,7 @@ Since Gmail restricts direct SMTP access from third-party apps:
 3. Generate an **App Password** under "App Passwords"
 4. Save this password securely (do **not** share it)
 
-> 📸 *Screenshot: App password creation step*
+> ![App password creation step](../assets/App%20password%20creation%20step.png)
 
 ---
 
