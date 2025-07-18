@@ -26,9 +26,9 @@ Download or copy your own `.svg` logo and rename it to match the original filena
 ```bash
 mv my-custom-logo.svg 30e500f584235c2912f16c790345f966.svg
 ```
+![Replace Dashboard Logo](../assets/Replace_Dashboard_Logo.png)
 
 ---
-
 ## 2. Change Favicon (Browser Tab Icon)
 
 ### Location
