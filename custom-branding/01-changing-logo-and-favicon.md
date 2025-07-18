@@ -30,6 +30,8 @@ mv my-custom-logo.svg 30e500f584235c2912f16c790345f966.svg
 
 ---
 ## 2. Change Favicon (Browser Tab Icon)
+Use upload your logo at https://realfavicongenerator.net/ and download the favicons generatored .zip file.
+Unzip it
 
 ### Location
 
@@ -50,6 +52,7 @@ Paste your own `.ico`, `.png`, or `.svg` favicon files into the current director
 
 > Ensure filenames and formats match the previous ones if you want to retain compatibility across all browsers.
 
+![Change Favicon](../assets/Change_Favicon.png)
 ---
 
 ## 3. Restart Wazuh Dashboard
@@ -59,9 +62,6 @@ After making the changes:
 ```bash
 sudo systemctl restart wazuh-dashboard
 ```
-
-
----
 
 
 
