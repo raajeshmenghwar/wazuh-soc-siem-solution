@@ -32,9 +32,14 @@ Scroll down and click the `Save` button to apply settings.
 
 ---
 
+![alt text](image.png)
+
+![Custom Branding GUI](../assets/custom-branding-GUI.png)
+
 ## 4. Refresh or Restart
 
 Sometimes a hard refresh (`Ctrl + Shift + R`) is required. If issues persist:
 ```bash
 sudo systemctl restart wazuh-dashboard
 ````
+
