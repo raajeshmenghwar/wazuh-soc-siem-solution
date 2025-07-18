@@ -55,7 +55,7 @@ Since Gmail restricts direct SMTP access from third-party apps:
 3. Generate an **App Password** under "App Passwords"
 4. Save this password securely (do **not** share it)
 
-> ![App password creation step](../assets/App%20password%20creation%20step.png)
+ ![App password creation step](../assets/App%20password%20creation%20step.png)
 ![App Password](../assets/App%20Password.png)
 ---
 
@@ -97,8 +97,6 @@ Restart Postfix:
 sudo systemctl restart postfix
 ```
 
-> 📸 *Screenshot: Final `main.cf` entries*
-
 ---
 
 ### 5. Test Mail
@@ -124,7 +122,6 @@ Add inside the `<global>` section:
 <smtp_server>127.0.0.1</smtp_server>
 ```
 
-> 📸 *Screenshot: Modified `ossec.conf` email section*
 
 Restart the manager:
 
@@ -158,7 +155,6 @@ The default Wazuh alert emails are plaintext and not well-formatted. For a more 
 * Customize headers and footers
 * Add logos, styled HTML content
 
-> 📸 *Screenshot: Sample custom email alert*
 
 ---
 

@@ -1,6 +1,4 @@
-# 01\_Overview\_Alerting.md
-
-## Alerting in Wazuh
+# Alerting in Wazuh
 
 Wazuh provides a powerful and extensible alerting framework that enables organizations to receive real-time notifications of security events, anomalies, and other important system events. These alerts help security analysts take immediate action and improve incident response.
 
