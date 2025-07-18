@@ -1,5 +1,3 @@
-# 02\_Email\_Integration.md
-
 ## Email Alerting via Postfix in Wazuh
 
 Setting up email alerts in Wazuh helps you stay informed about critical events in your environment. This guide outlines how to configure Wazuh to send professional-grade email alerts.
