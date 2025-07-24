@@ -83,20 +83,22 @@ Paste the following:
 # Slack Webhook URL
 WEBHOOK_URL="https://hooks.slack.com/services/YOUR/WEBHOOK/URL"
 
-# Read alert JSON from stdin
-ALERT=$(</dev/stdin)
+# Read full input from stdin
+read input
 
-# Extract relevant fields using basic text parsing
-LEVEL=$(echo "$ALERT" | grep -o '"level":[0-9]*' | cut -d':' -f2)
-DESCRIPTION=$(echo "$ALERT" | grep -o '"description":"[^"]*' | cut -d':' -f2 | tr -d '"')
-FULL_LOG=$(echo "$ALERT" | grep -o '"full_log":"[^"]*' | cut -d':' -f2- | tr -d '"' | sed 's/\\n/\n/g')
+# Extract description, level, full_log using grep and awk
+description=$(echo "$input" | grep -oP '"description"\s*:\s*"\K[^"]+')
+level=$(echo "$input" | grep -oP '"level"\s*:\s*\K[0-9]+')
+full_log=$(echo "$input" | grep -oP '"full_log"\s*:\s*"\K[^"]+')
 
-# Format the Slack message
-MESSAGE=":rotating_light: Wazuh Alert (Level $LEVEL) :rotating_light:\nDescription: $DESCRIPTION\nLog: $FULL_LOG"
+# Construct Slack message
+message="🚨 *Wazuh Alert (Level $level)* 🚨
+*Description:* $description
+*Log:* \`$full_log\`"
 
 # Send to Slack
-curl -X POST -H 'Content-type: application/json' \
-     --data "{\"text\": \"$MESSAGE\"}" "$WEBHOOK_URL"
+curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$message\"}" "$webhook_url"
+
 ```
 
 > Replace `YOUR/WEBHOOK/URL` with the actual Webhook URL generated in Step 1.
