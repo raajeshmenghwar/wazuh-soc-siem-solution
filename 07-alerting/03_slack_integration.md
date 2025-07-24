@@ -113,15 +113,23 @@ sudo chmod +x /var/ossec/active-response/bin/slack-alert.sh
 
 ---
 
+Sure! Here's the **rewritten section** using **`<level>7</level>`** instead of specific rule IDs:
+
+---
+
 ## Step 4: Register the Script in `ossec.conf`
 
-Open the Wazuh configuration:
+To trigger your custom Slack alert script, you need to register it in the Wazuh configuration.
+
+### 1. Open the Wazuh Configuration File
 
 ```bash
 sudo nano /var/ossec/etc/ossec.conf
 ```
 
-### Add under `<command>`:
+### 2. Define the Command (Inside the `<command>` block)
+
+Locate the `<command>` section and add the following entry:
 
 ```xml
 <command>
@@ -131,21 +139,25 @@ sudo nano /var/ossec/etc/ossec.conf
 </command>
 ```
 
-### Add under `<active-response>`:
+This tells Wazuh to use your `slack-alert.sh` script when the `slack_alert` command is triggered.
+
+### 3. Configure Active Response (Inside the `<active-response>` block)
+
+Now, configure Wazuh to execute this command for all alerts with severity level 7 and above:
 
 ```xml
 <active-response>
   <command>slack_alert</command>
   <location>local</location>
-  <rules_id>100,101,1101,2502,1110,18107,18108,18109,5710</rules_id> <!-- Change rule_id as needed -->
-  <level>7</level>  <!-- Send alerts of level 7 and above -->
+  <level>7</level>
 </active-response>
-
 ```
 
-> The rule ID `2502` is associated with multiple failed SSH login attempts, which is common for brute-force attempts.
+* `<command>`: Must match the command name defined above.
+* `<location>`: `local` means the script will run on the same machine where the alert was generated.
+* `<level>`: Triggers the response for any alert with level 7 or higher.
 
-To apply to all alerts above a certain severity, you can use `<level>10</level>` instead of a specific rule ID.
+> **Note:** Setting `<level>7</level>` helps you catch medium to high severity alerts without specifying individual rule IDs.
 
 ---
 
