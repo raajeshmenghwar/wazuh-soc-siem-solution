@@ -138,6 +138,7 @@ sudo nano /var/ossec/etc/ossec.conf
   <command>slack_alert</command>
   <location>local</location>
   <rule_id>2502</rule_id> <!-- Change rule_id as needed -->
+  <lelve>7<level>
 </active-response>
 ```
 
