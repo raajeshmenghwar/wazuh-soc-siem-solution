@@ -200,9 +200,7 @@ Wazuh Alert (Level 10)
 Description: syslog: User missed the password more than one time
 Log: sshd[1234]: PAM 2 more authentication failures; logname= uid=0 euid=0 tty=ssh ruser= rhost=127.0.0.1
 ```
-
-
-
+![Alert in Slack](../assets/slack_integration_4.png)
 ---
 
 ## What Happens Behind the Scenes?
