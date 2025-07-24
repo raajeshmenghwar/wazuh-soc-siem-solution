@@ -233,18 +233,9 @@ sudo mv /var/ossec/active-response/bin/slack-alert.sh.disabled /var/ossec/active
 
 ---
 
-## Final Notes
-
-This integration enables security teams to monitor threats more effectively by merging infrastructure and communication tools. For production, consider:
-
-* Adding retry logic for failed webhook sends
-* Filtering or batching alerts to reduce noise
-* Logging each alert locally for audit purposes
-
----
-
-## References
+## Referencs
 
 * [Slack Webhooks API Documentation](https://api.slack.com/messaging/webhooks)
 * [Wazuh Official Documentation](https://documentation.wazuh.com/)
+* [How to Integrate Wazuh with Slack Webhooks for Real-Time Security Alerts](https://ithardenup.com/how-to-integrate-wazuh-with-slack-webhooks-for-real-time-security-alerts/)
 
