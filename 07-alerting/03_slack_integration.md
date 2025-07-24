@@ -113,11 +113,6 @@ curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"$message\"}
 ```bash
 sudo chmod +x /var/ossec/active-response/bin/slack-alert.sh
 ```
-
----
-
-Your section is mostly well-written and technically sound, but it could benefit from slight corrections for clarity, consistency, and correctness. Here's a refined version that ensures professional tone, XML correctness, and beginner clarity:
-
 ---
 
 ## Step 4: Register the Script in `ossec.conf`
@@ -205,6 +200,8 @@ Wazuh Alert (Level 10)
 Description: syslog: User missed the password more than one time
 Log: sshd[1234]: PAM 2 more authentication failures; logname= uid=0 euid=0 tty=ssh ruser= rhost=127.0.0.1
 ```
+
+
 
 ---
 
