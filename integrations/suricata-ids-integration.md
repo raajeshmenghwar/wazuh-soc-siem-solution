@@ -9,6 +9,11 @@ sudo tar -xvzf emerging.rules.tar.gz && sudo mkdir /etc/suricata/rules && sudo m
 sudo chmod 640 /etc/suricata/rules/*.rules
 Restart the Suricata service:
 sudo systemctl restart suricata
+
+Verify Suricata installation
+suricata -V
+This is Suricata version 8.0.0 RELEASE
+
 Add the following configuration to the /var/ossec/etc/ossec.conf file of the Wazuh agent. This allows the Wazuh agent to read the Suricata logs file:
 <ossec_config>
   <localfile>
