@@ -113,13 +113,13 @@ sudo chmod +x /var/ossec/active-response/bin/slack-alert.sh
 
 ---
 
-Sure! Here's the **rewritten section** using **`<level>7</level>`** instead of specific rule IDs:
+Your section is mostly well-written and technically sound, but it could benefit from slight corrections for clarity, consistency, and correctness. Here's a refined version that ensures professional tone, XML correctness, and beginner clarity:
 
 ---
 
 ## Step 4: Register the Script in `ossec.conf`
 
-To trigger your custom Slack alert script, you need to register it in the Wazuh configuration.
+To trigger your custom Slack alert script, you must register it in the Wazuh configuration.
 
 ### 1. Open the Wazuh Configuration File
 
@@ -129,7 +129,7 @@ sudo nano /var/ossec/etc/ossec.conf
 
 ### 2. Define the Command (Inside the `<command>` block)
 
-Locate the `<command>` section and add the following entry:
+Locate the `<command>` section in the configuration and add the following entry:
 
 ```xml
 <command>
@@ -139,25 +139,42 @@ Locate the `<command>` section and add the following entry:
 </command>
 ```
 
-This tells Wazuh to use your `slack-alert.sh` script when the `slack_alert` command is triggered.
+This block defines a command named `slack_alert`, which points to the script file `slack-alert.sh` located inside `/var/ossec/active-response/bin/`. The `<timeout_allowed>` tag specifies whether Wazuh should terminate the script if it runs too long.
 
 ### 3. Configure Active Response (Inside the `<active-response>` block)
 
-Now, configure Wazuh to execute this command for all alerts with severity level 7 and above:
+Next, add the active response configuration that tells Wazuh *when* to run the script:
 
 ```xml
 <active-response>
   <command>slack_alert</command>
   <location>local</location>
-  <level>7</level>
+  <rules_id>2502,100,101,1101,1110,18107,18108,18109,5710</rules_id>
+  <level>10</level>
 </active-response>
 ```
 
-* `<command>`: Must match the command name defined above.
-* `<location>`: `local` means the script will run on the same machine where the alert was generated.
-* `<level>`: Triggers the response for any alert with level 7 or higher.
+* `<command>`: Refers to the `name` value defined earlier.
+* `<location>`: Set to `local` so the script runs on the agent or manager where the alert is generated.
+* `<rules_id>`: Specifies which rule IDs should trigger the alert. You can modify this list as needed.
+* `<level>`: Defines the minimum alert severity level to trigger this response. You can choose a threshold like `7` or `10` depending on your use case.
 
-> **Note:** Setting `<level>7</level>` helps you catch medium to high severity alerts without specifying individual rule IDs.
+**Note:**
+The rule ID `2502` is commonly used for detecting multiple failed SSH login attempts (a brute-force attack pattern).
+You can either:
+
+* Use specific `<rules_id>` for fine control, or
+* Use `<level>10</level>` alone to trigger on all alerts above that severity without needing to specify individual rule IDs.
+
+If you prefer to trigger based purely on severity level:
+
+```xml
+<active-response>
+  <command>slack_alert</command>
+  <location>local</location>
+  <level>10</level>
+</active-response>
+```
 
 ---
 
