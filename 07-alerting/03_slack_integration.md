@@ -137,9 +137,10 @@ sudo nano /var/ossec/etc/ossec.conf
 <active-response>
   <command>slack_alert</command>
   <location>local</location>
-  <rule_id>2502</rule_id> <!-- Change rule_id as needed -->
-  <lelve>7<level>
+  <rules_id>100,101,1101,1110,18107,18108,18109,5710</rules_id> <!-- Change rule_id as needed -->
+  <level>7</level>  <!-- Send alerts of level 7 and above -->
 </active-response>
+
 ```
 
 > The rule ID `2502` is associated with multiple failed SSH login attempts, which is common for brute-force attempts.
