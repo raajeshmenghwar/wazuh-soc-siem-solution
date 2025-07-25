@@ -25,8 +25,10 @@ nano /etc/suricata/suricata.yaml
     it'll look like this 
     #EXTERNAL_NET: "!$HOME_NET"
     EXTERNAL_NET: "any"
-
-
+3. Set the interface for the suricata, remember we noted our interface earlier i.e ens33(in my case), OR you check it again using ifconfig.
+  search for the af-packet in /etc/suricata/suricata.yaml, in nano, press the ctrl+w and search for af-packcet and change the ineterface for us.
+  By default interface is interface: eth0
+  and we have to change it to our own i.e ens33
 
 Add the following configuration to the /var/ossec/etc/ossec.conf file of the Wazuh agent. This allows the Wazuh agent to read the Suricata logs file:
 <ossec_config>
