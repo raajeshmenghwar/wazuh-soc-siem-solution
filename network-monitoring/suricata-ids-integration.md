@@ -35,8 +35,10 @@ nano /etc/suricata/suricata.yaml
   How to search for that in suricata.yaml, in nano simple press the ctl+w and search for rule-path and hit enter:
   rule-files:
     - suricata.rules
-    
-
+  Suricata ET rules are in /etc/suricata/rules/ directory so we are changing the default-rule-path like this
+   default-rule-path: /etc/suricata/rules/
+rule-files:
+    - *.rules
 
 Add the following configuration to the /var/ossec/etc/ossec.conf file of the Wazuh agent. This allows the Wazuh agent to read the Suricata logs file:
 <ossec_config>
