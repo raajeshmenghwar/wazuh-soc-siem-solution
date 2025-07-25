@@ -194,7 +194,7 @@ sudo systemctl status wazuh-manager wazuh-dashboard wazuh-indexer
 
 ---
 
-## Step 5: Simulate Detection (Optional Testing)
+## Step 5: Simulate Detection
 
 From a Kali Linux attacker machine:
 
@@ -218,6 +218,7 @@ This should trigger Suricata alerts for **Nmap scanning**.
 3. Select the agent running Suricata
 4. Filter by **Rule Group: Suricata**
 
+![View Alerts in the Wazuh Dashboard](../assets/suricata_integration_1.png)
 Example alert:
 
 ```
