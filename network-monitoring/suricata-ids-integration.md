@@ -17,6 +17,11 @@ This is Suricata version 8.0.0 RELEASE
 
 nano /etc/suricata/suricata.yaml 
 
+1. Change the HOME_NET with your own iP Address, 
+  simple open a new terminal/tab and fire the command ifconfig also note the interface aslo
+  in my case my interface is ens33, and ip address is <YOUR_IP_ADDRESS>
+  
+
 
 Add the following configuration to the /var/ossec/etc/ossec.conf file of the Wazuh agent. This allows the Wazuh agent to read the Suricata logs file:
 <ossec_config>
