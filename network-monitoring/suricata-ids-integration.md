@@ -44,7 +44,7 @@ Not needed on:
     - Normal endpoints (desktops, workstations) — unless:
     - You're running high-risk apps/services on them
     - You need deep traffic analysis at the host level
-    - You have plenty of resources to manage and analyze network data from each endpoin
+    - You have plenty of resources to manage and analyze network data from each endpoind
 
 Suricata is not meant to be installed on every endpoint. Deploy it at strategic points where network visibility matters.
 
@@ -263,3 +263,297 @@ jq '.' /var/log/suricata/eve.json
 * The Emerging Threats rule set offers a great baseline.
 * Logs are ingested via the `eve.json` file using Wazuh’s `<localfile>` configuration.
 * Use the Wazuh Dashboard for easy visibility and alert triage.
+
+
+
+Your documentation is very strong — it’s comprehensive, well-structured, and beginner-friendly. That said, here’s a **critical, professional review and edit** to refine clarity, tone, formatting, and technical correctness, making it suitable for internal or published use in a **corporate-grade SIEM documentation portal**.
+
+---
+
+### ✅ **Overall Strengths**
+
+* ✅ Structured into logical steps
+* ✅ Beginner-friendly and technically accurate
+* ✅ Uses real commands and context
+* ✅ Correctly emphasizes critical pain points (e.g., `eve.json`, rule paths)
+* ✅ Markdown formatting is clean and organized
+
+---
+
+### 🔧 **Professional Edits and Suggestions**
+
+Below is the **revised and enhanced version** with improvements in structure, clarity, and technical writing tone:
+
+---
+
+# Suricata Integration with Wazuh SIEM
+
+## Overview
+
+[**Suricata**](https://suricata.io/) is a high-performance, open-source network threat detection engine developed by the [Open Information Security Foundation (OISF)](https://oisf.net). It functions as:
+
+* **Intrusion Detection System (IDS)**
+* **Intrusion Prevention System (IPS)**
+* **Network Security Monitoring (NSM)** tool
+
+Suricata analyzes traffic using deep packet inspection (DPI), pattern matching, and protocol analysis. Its behavior is driven by customizable and community-maintained **rule sets**.
+
+---
+
+## Why Use Suricata with Wazuh?
+
+Wazuh integrates with Suricata to centralize, enrich, and correlate Suricata’s security event logs. This integration allows security teams to detect, investigate, and respond to network-based threats within the Wazuh SIEM platform.
+
+**Use cases include:**
+
+* Detecting reconnaissance activities like port scans
+* Triggering alerts based on suspicious packet signatures
+* Enriching host-based logs with network-layer visibility
+
+---
+
+## Suricata vs. Other Tools
+
+**How does Suricata compare to other popular NIDS/NSM tools?**
+
+* **Snort**: Mature and widely adopted, but single-threaded (less performant on multi-core systems)
+* **Zeek (Bro)**: Focuses on protocol-level behavior analysis and scripting, great for detailed logging and investigation
+* **Suricata**: Multithreaded, high-speed engine supporting IDS/IPS/NSM modes with deep packet inspection and community rulesets
+
+---
+
+## Where Should Suricata Be Installed?
+
+Install **Suricata on the same host as the Wazuh Manager**, or on strategic network nodes like DMZ servers, bastion hosts, or perimeter firewalls.
+
+> ⚠️ **Important:**
+> Many users get stuck by installing Suricata on a Wazuh **agent** (or endpoint), expecting logs to appear in the dashboard.
+> This won't work unless logs are shipped to the Wazuh Manager. Wazuh **expects Suricata logs to be locally available** on the Manager node by default.
+
+**Recommended placement:**
+
+* ✅ Wazuh Manager (for centralized ingestion)
+* ✅ Perimeter/DMZ servers
+* ❌ Not recommended on every endpoint (unless required)
+
+---
+
+## Step 1: Install Suricata
+
+```bash
+sudo add-apt-repository ppa:oisf/suricata-stable
+sudo apt-get update
+sudo apt-get install suricata -y
+```
+
+Verify the installation:
+
+```bash
+suricata -V
+# Output: Suricata version 8.x.x RELEASE
+```
+
+---
+
+## Step 2: Install and Configure Rules
+
+### 2.1 Download Emerging Threats (ET) Rules
+
+[Emerging Threats](https://rules.emergingthreats.net/) provides community-maintained IDS/IPS rules compatible with Suricata.
+
+```bash
+cd /tmp/
+curl -LO https://rules.emergingthreats.net/open/suricata-6.0.8/emerging.rules.tar.gz
+tar -xvzf emerging.rules.tar.gz
+sudo mkdir -p /etc/suricata/rules
+sudo mv rules/*.rules /etc/suricata/rules/
+sudo chmod 640 /etc/suricata/rules/*.rules
+```
+
+---
+
+## Step 3: Configure `suricata.yaml`
+
+Open the configuration:
+
+```bash
+sudo nano /etc/suricata/suricata.yaml
+```
+
+### 3.1 Define Network Ranges
+
+```yaml
+HOME_NET: "<YOUR_IP_ADDRESS>"   # Replace with your actual IP
+# EXTERNAL_NET: "!$HOME_NET"    # Comment this line
+EXTERNAL_NET: "any"             # Un-comment this line
+```
+
+To find your IP:
+
+```bash
+ip a
+```
+
+### 3.2 Set the Network Interface
+
+Search for the `af-packet` section and set your interface (e.g., `ens33`):
+
+```yaml
+af-packet:
+  - interface: ens33
+```
+
+To list interfaces:
+
+```bash
+ip link show
+```
+
+### 3.3 Set Rule Paths
+
+Ensure Suricata loads your rules:
+
+```yaml
+default-rule-path: /etc/suricata/rules
+
+rule-files:
+  - "*.rules"
+```
+
+> This tells Suricata to load **all `.rules` files** in `/etc/suricata/rules`.
+
+### 3.4 Restart Suricata
+
+```bash
+sudo systemctl restart suricata
+sudo systemctl status suricata
+```
+
+---
+
+## Step 4: Integrate Suricata with Wazuh
+
+### 4.1 Suricata Log Path
+
+Suricata logs in JSON format to:
+
+```
+/var/log/suricata/eve.json
+```
+
+### 4.2 Configure Wazuh to Ingest Logs
+
+Edit the Wazuh Manager config:
+
+```bash
+sudo nano /var/ossec/etc/ossec.conf
+```
+
+Add inside `<ossec_config>`:
+
+```xml
+<localfile>
+  <log_format>json</log_format>
+  <location>/var/log/suricata/eve.json</location>
+</localfile>
+```
+
+### 4.3 Restart Wazuh Manager
+
+```bash
+sudo systemctl restart wazuh-manager
+```
+
+Verify services:
+
+```bash
+sudo systemctl status wazuh-manager wazuh-dashboard wazuh-indexer
+```
+
+---
+
+## Step 5: Simulate Detection (Optional Testing)
+
+From a Kali Linux attacker machine:
+
+```bash
+nmap -sS -T4 <TARGET-IP>
+```
+
+Explanation:
+
+* `-sS`: SYN scan (stealth)
+* `-T4`: Fast scan timing
+
+This should trigger Suricata alerts for **Nmap scanning**.
+
+---
+
+## Step 6: View Alerts in the Wazuh Dashboard
+
+1. Open **Wazuh Dashboard**
+2. Navigate to **Security Events**
+3. Select the agent running Suricata
+4. Filter by **Rule Group: Suricata**
+
+Example alert:
+
+```
+ET SCAN Nmap Synchronous Scan
+```
+
+---
+
+## Monitor Suricata Logs (CLI)
+
+View plain-text alerts:
+
+```bash
+sudo cat /var/log/suricata/fast.log
+```
+
+View structured JSON logs:
+
+```bash
+jq '.' /var/log/suricata/eve.json
+```
+
+Install `jq` if needed:
+
+```bash
+sudo apt install jq
+```
+
+---
+
+## Troubleshooting
+
+| Issue                      | Cause                             | Solution                                    |
+| -------------------------- | --------------------------------- | ------------------------------------------- |
+| No alerts/logs in Wazuh    | Suricata not logging or misconfig | Check interface, rule paths, log format     |
+| `eve.json` empty           | No matching rules triggered       | Simulate an attack (e.g., `nmap`)           |
+| Permission denied on rules | Incorrect file permissions        | Use `chmod 640` on rule files               |
+| Service failed to start    | YAML syntax error                 | Test config with `suricata -T -c /path/...` |
+
+---
+
+## Summary
+
+* **Suricata** enhances Wazuh by providing deep network visibility via IDS/IPS capabilities.
+* Install Suricata **on the same host as Wazuh Manager** for seamless integration.
+* Use **Emerging Threats rulesets** for baseline coverage.
+* Configure `suricata.yaml` carefully: network interface, IP ranges, and rules path.
+* Ingest logs from `eve.json` using Wazuh’s `<localfile>` directive.
+* Validate integration via Nmap and the Wazuh dashboard.
+
+---
+
+## Next Steps
+
+After validating Suricata integration:
+
+* Tune detection rules for your environment
+* Integrate additional threat intelligence sources
+* Consider extending to perimeter devices (e.g., pfSense, network firewalls)
+* Monitor performance impact on high-throughput nodes
+
