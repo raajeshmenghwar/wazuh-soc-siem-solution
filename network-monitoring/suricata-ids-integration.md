@@ -13,12 +13,11 @@ It analyzes network traffic using deep packet inspection (DPI), pattern matching
 
 ## Suricata vs Other Network Monitoring Tools
 
-| Tool         | Focus                    | Notes                                     |
-| ------------ | ------------------------ | ----------------------------------------- |
-| **Suricata** | Multi-role (IDS/IPS/NSM) | Multithreaded, high-performance engine    |
-| Snort        | IDS/IPS                  | Older but widely used; single-threaded    |
-| Zeek         | NSM                      | Protocol analysis and behavior monitoring |
+[Suricata](https://suricata.io/) is a modern, high-performance engine that acts as an IDS, IPS, and Network Security Monitoring (NSM) tool. It supports multithreading, deep packet inspection, and is designed for scalability and speed.
 
+[Snort](https://snort.org/) is a widely used IDS/IPS focused on real-time traffic analysis and packet logging. While robust and mature, it is single-threaded, which can limit performance on multi-core systems.
+
+[Zeek](https://zeek.org/) (formerly Bro) is primarily a network security monitoring platform. It excels at protocol analysis and behavioral monitoring, providing rich context and scripting capabilities for advanced network visibility.
 ---
 
 ## Why Use Suricata with Wazuh?
