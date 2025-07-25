@@ -6,6 +6,9 @@
 
 Developed by the **Open Information Security Foundation (OISF)**, it’s designed to process and analyze network traffic at high speeds using customizable **rulesets**.
 
+Why do we use the suricata with wazuh?
+Suricata vs others?
+
 
 iF you don't have rules and IDS or IPS is nothing more than a device.
 Step 1: Installing Suricata and Rules
@@ -13,6 +16,8 @@ Install Suricata on the Ubuntu endpoint. We tested this process with version 6.0
 sudo add-apt-repository ppa:oisf/suricata-stable
 sudo apt-get update
 sudo apt-get install suricata -y
+
+What are the Emerging Threat Rulesets?
 Download and extract the Emerging Threats Suricata ruleset:
 cd /tmp/ && curl -LO https://rules.emergingthreats.net/open/suricata-6.0.8/emerging.rules.tar.gz
 sudo tar -xvzf emerging.rules.tar.gz && sudo mkdir /etc/suricata/rules && sudo mv rules/*.rules /etc/suricata/rules/
