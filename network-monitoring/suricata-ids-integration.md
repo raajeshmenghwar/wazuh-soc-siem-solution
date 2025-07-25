@@ -58,9 +58,16 @@ Add the following configuration to the /var/ossec/etc/ossec.conf file of the Waz
   </localfile>
 </ossec_config>
 
+restart the wazuh-manager
+sudo systemctl restart wazuh-manager
+
+
 So now let's check that our system are working fine
 check the suricata status
-systemctl status suricata - must be running
+sudo systemctl status suricata - must be running
+
+You can also check the status of wazuh-dashborad manager and indexer also
+systemctl status wazuh-manager wazuh-dashboard wazuh-indexer
 
 Step 3: Simulate Attack using Kali Linux
 On Kali Linux terminal, run a SYN scan:
