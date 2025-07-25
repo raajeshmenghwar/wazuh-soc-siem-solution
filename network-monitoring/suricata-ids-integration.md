@@ -38,7 +38,13 @@ nano /etc/suricata/suricata.yaml
   Suricata ET rules are in /etc/suricata/rules/ directory so we are changing the default-rule-path like this
    default-rule-path: /etc/suricata/rules/
 rule-files:
-    - *.rules
+    - "*.rules"
+    - It saying that any rule in the rules direcotry which has .rules extension should be executed OR treated as a the suricata rule path.
+
+  Save and exit
+  Restart the suricta
+  sudo systemctl restart suricata
+
 
 Add the following configuration to the /var/ossec/etc/ossec.conf file of the Wazuh agent. This allows the Wazuh agent to read the Suricata logs file:
 <ossec_config>
