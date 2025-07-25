@@ -34,19 +34,35 @@ Wazuh integrates Suricata logs into its platform for better correlation, central
 
 ---
 
-## Where Should Suricata Be Installed?
-Install Suricata on:
+🛡️ Where Should Suricata Be Installed?
+Suricata is a powerful network threat detection engine, but it must be placed strategically in your network to be effective and useful in your Wazuh SIEM setup.
 
-    - Wazuh Manager — to monitor incoming/outgoing traffic and protect your SIEM backend.
-    - Perimeter Servers / Web Servers / Bastion Hosts / DMZ nodes — where network visibility is crucial and threats are more likely to hit.
+✅ Recommended Installation Locations:
+Wazuh Manager
+Place Suricata on the same host as the Wazuh Manager. This allows Wazuh to easily access and process Suricata's alerts (from /var/log/suricata/fast.log or /eve.json) without needing external log forwarding.
 
-Not needed on:
-    - Normal endpoints (desktops, workstations) — unless:
-    - You're running high-risk apps/services on them
-    - You need deep traffic analysis at the host level
-    - You have plenty of resources to manage and analyze network data from each endpoind
+DMZ Nodes / Perimeter Servers / Bastion Hosts / Web Servers
+These are high-exposure points where incoming and outgoing traffic should be monitored closely. Installing Suricata here helps detect scanning, malware, or C2 activities before they reach internal assets.
 
-Suricata is not meant to be installed on every endpoint. Deploy it at strategic points where network visibility matters.
+❌ Not Recommended (unless necessary):
+Normal Endpoints / Workstations / Desktops
+Do not install Suricata on every endpoint. It can cause confusion and unnecessary resource consumption.
+
+Only consider it when:
+
+You're running high-risk services on the host
+
+You need deep packet inspection at the endpoint level
+
+You have the infrastructure to manage, ship, and analyze logs from multiple agents manually
+
+⚠️ Why This Matters:
+ Important Note:
+Many beginners make the mistake of installing Suricata on a Wazuh agent (endpoint) and expect logs to show up in the Wazuh dashboard automatically.
+That won't happen unless the logs are explicitly shipped back to the Wazuh Manager, which requires additional configuration (like Filebeat or Logstash).
+
+To avoid unnecessary complexity:
+➡️ Install Suricata where it makes sense — near network entry/exit points or your Wazuh Manager — not everywhere.
 
 ---
 
