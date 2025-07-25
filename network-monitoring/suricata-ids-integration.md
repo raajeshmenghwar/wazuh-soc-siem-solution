@@ -10,6 +10,7 @@
 
 Suricata analyzes traffic using deep packet inspection (DPI), pattern matching, and protocol analysis. Its behavior is driven by customizable and community-maintained **rule sets**.
 
+
 ---
 
 ## Why Use Suricata with Wazuh?
