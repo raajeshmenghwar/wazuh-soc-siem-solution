@@ -9,6 +9,24 @@ Developed by the **Open Information Security Foundation (OISF)**, it’s designe
 Why do we use the suricata with wazuh?
 Suricata vs others?
 
+Where to install suricata on server OR agent?
+Suricata
+Suricata should be installed on key infrastructure nodes (like servers or gateways) where monitoring network traffic is important. It is not necessary to install it on regular workstations (agents), unless there's a specific need.
+
+Install Suricata on:
+
+    ✅ Wazuh Manager — to monitor incoming/outgoing traffic and protect your SIEM backend.
+    ✅ Perimeter Servers / Web Servers / Bastion Hosts / DMZ nodes — where network visibility is crucial and threats are more likely to hit.
+
+Not needed on:
+
+    🚫 Normal endpoints (desktops, workstations) — unless:
+        You're running high-risk apps/services on them
+        You need deep traffic analysis at the host level
+        You have plenty of resources to manage and analyze network data from each endpoint
+Malware Check	VirusTotal API	Easy	Threat intelligence
+Host-Level Monitoring (Win)	Sysmon	Easy	Detailed endpoint visibility
+Behavioral Logs + Investigation	OSQuery	Easy
 
 iF you don't have rules and IDS or IPS is nothing more than a device.
 Step 1: Installing Suricata and Rules
