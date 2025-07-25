@@ -15,6 +15,9 @@ Verify Suricata installation
 suricata -V
 This is Suricata version 8.0.0 RELEASE
 
+nano /etc/suricata/suricata.yaml 
+
+
 Add the following configuration to the /var/ossec/etc/ossec.conf file of the Wazuh agent. This allows the Wazuh agent to read the Suricata logs file:
 <ossec_config>
   <localfile>
