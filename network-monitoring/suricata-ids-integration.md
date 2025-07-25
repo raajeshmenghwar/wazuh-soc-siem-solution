@@ -35,12 +35,16 @@ Wazuh integrates Suricata logs into its platform for better correlation, central
 ---
 
 ## Where Should Suricata Be Installed?
+Install Suricata on:
 
-| Install Location               | Recommended | Description                                                 |
-| ------------------------------ | ----------- | ----------------------------------------------------------- |
-| Wazuh Manager                  | ✅ Yes       | Monitors traffic reaching your SIEM system                  |
-| Perimeter Servers / DMZ        | ✅ Yes       | Detects external attacks early                              |
-| Internal Workstations / Agents | ❌ Optional  | Not needed unless traffic inspection at host level is vital |
+    - Wazuh Manager — to monitor incoming/outgoing traffic and protect your SIEM backend.
+    - Perimeter Servers / Web Servers / Bastion Hosts / DMZ nodes — where network visibility is crucial and threats are more likely to hit.
+
+Not needed on:
+    - Normal endpoints (desktops, workstations) — unless:
+    - You're running high-risk apps/services on them
+    - You need deep traffic analysis at the host level
+    - You have plenty of resources to manage and analyze network data from each endpoin
 
 Suricata is not meant to be installed on every endpoint. Deploy it at strategic points where network visibility matters.
 
