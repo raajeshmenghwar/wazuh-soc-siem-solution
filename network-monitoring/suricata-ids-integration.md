@@ -1,123 +1,286 @@
-**Suricata** is an open-source network threat detection engine capable of functioning as:
+# Suricata Integration with Wazuh SIEM
 
-- IDS (Intrusion Detection System)
-- IPS (Intrusion Prevention System)
-- NSM (Network Security Monitoring) tool
+## Overview
 
-Developed by the **Open Information Security Foundation (OISF)**, it’s designed to process and analyze network traffic at high speeds using customizable **rulesets**.
+**[Suricata](https://suricata.io/)** is a high-performance, open-source network threat detection engine developed by the [Open Information Security Foundation (OISF)](https://oisf.net). It functions as:
 
-Why do we use the suricata with wazuh?
-Suricata vs others?
+* **IDS (Intrusion Detection System)**
+* **IPS (Intrusion Prevention System)**
+* **NSM (Network Security Monitoring) tool**
 
-Where to install suricata on server OR agent?
-Suricata
-Suricata should be installed on key infrastructure nodes (like servers or gateways) where monitoring network traffic is important. It is not necessary to install it on regular workstations (agents), unless there's a specific need.
+It analyzes network traffic using deep packet inspection (DPI), pattern matching, and protocol analysis, powered by customizable rule sets.
 
-Install Suricata on:
 
-    ✅ Wazuh Manager — to monitor incoming/outgoing traffic and protect your SIEM backend.
-    ✅ Perimeter Servers / Web Servers / Bastion Hosts / DMZ nodes — where network visibility is crucial and threats are more likely to hit.
+## Suricata vs Other Network Monitoring Tools
 
-Not needed on:
+| Tool         | Focus                    | Notes                                     |
+| ------------ | ------------------------ | ----------------------------------------- |
+| **Suricata** | Multi-role (IDS/IPS/NSM) | Multithreaded, high-performance engine    |
+| Snort        | IDS/IPS                  | Older but widely used; single-threaded    |
+| Zeek         | NSM                      | Protocol analysis and behavior monitoring |
 
-    🚫 Normal endpoints (desktops, workstations) — unless:
-        You're running high-risk apps/services on them
-        You need deep traffic analysis at the host level
-        You have plenty of resources to manage and analyze network data from each endpoint
-Malware Check	VirusTotal API	Easy	Threat intelligence
-Host-Level Monitoring (Win)	Sysmon	Easy	Detailed endpoint visibility
-Behavioral Logs + Investigation	OSQuery	Easy
+---
 
-iF you don't have rules and IDS or IPS is nothing more than a device.
-Step 1: Installing Suricata and Rules
-Install Suricata on the Ubuntu endpoint. We tested this process with version 6.0.8 and it can take some time:
+## Why Use Suricata with Wazuh?
+
+| Feature                  | Suricata Role                            | Wazuh Role                                   |
+| ------------------------ | ---------------------------------------- | -------------------------------------------- |
+| Network Threat Detection | Analyzes traffic and detects anomalies   | Collects and normalizes Suricata logs        |
+| Alert Correlation        | Matches traffic with threat intelligence | Aggregates alerts, enriches context          |
+| Visibility               | Monitors gateway and server traffic      | Displays findings in a centralized dashboard |
+
+Wazuh integrates Suricata logs into its platform for better correlation, centralized alerting, and event analysis.
+
+
+
+---
+
+## Where Should Suricata Be Installed?
+
+| Install Location               | Recommended | Description                                                 |
+| ------------------------------ | ----------- | ----------------------------------------------------------- |
+| Wazuh Manager                  | ✅ Yes       | Monitors traffic reaching your SIEM system                  |
+| Perimeter Servers / DMZ        | ✅ Yes       | Detects external attacks early                              |
+| Internal Workstations / Agents | ❌ Optional  | Not needed unless traffic inspection at host level is vital |
+
+Suricata is not meant to be installed on every endpoint. Deploy it at strategic points where network visibility matters.
+
+---
+
+## Step 1: Install Suricata on Ubuntu
+
+### 1.1 Add the Official PPA and Install
+
+```bash
 sudo add-apt-repository ppa:oisf/suricata-stable
 sudo apt-get update
 sudo apt-get install suricata -y
+```
 
-What are the Emerging Threat Rulesets?
-Download and extract the Emerging Threats Suricata ruleset:
-cd /tmp/ && curl -LO https://rules.emergingthreats.net/open/suricata-6.0.8/emerging.rules.tar.gz
-sudo tar -xvzf emerging.rules.tar.gz && sudo mkdir /etc/suricata/rules && sudo mv rules/*.rules /etc/suricata/rules/
-sudo chmod 640 /etc/suricata/rules/*.rules
-Restart the Suricata service:
-sudo systemctl restart suricata
+Verify the installation:
 
-Verify Suricata installation
+```bash
 suricata -V
-This is Suricata version 8.0.0 RELEASE
+# Output: Suricata version 8.0.0 RELEASE (or similar)
+```
 
-nano /etc/suricata/suricata.yaml 
+---
 
-1. Change the HOME_NET with your own iP Address, 
-  simple open a new terminal/tab and fire the command ifconfig also note the interface aslo
-  in my case my interface is ens33, and ip address is <YOUR_IP_ADDRESS>
-2. Just say any instead of home_net in EXTERNAL_NET, so what are we doing, just commeting the #EXTERNAL_NET: "!$HOME_NET"
-    and uncommenting the EXTERNAL_NET: "any"
-    it'll look like this 
-    #EXTERNAL_NET: "!$HOME_NET"
-    EXTERNAL_NET: "any"
-3. Set the interface for the suricata, remember we noted our interface earlier i.e ens33(in my case), OR you check it again using ifconfig.
-  search for the af-packet in /etc/suricata/suricata.yaml, in nano, press the ctrl+w and search for af-packcet and change the ineterface for us.
-  By default interface is interface: eth0
-  and we have to change it to our own i.e ens33
+## Step 2: Download and Configure Rules
 
-4. Make to sure the defualt rule path for the suricata, 
-  default rule in suricata is : default-rule-path: /var/lib/suricata/rules
-  How to search for that in suricata.yaml, in nano simple press the ctl+w and search for rule-path and hit enter:
-  rule-files:
-    - suricata.rules
-  Suricata ET rules are in /etc/suricata/rules/ directory so we are changing the default-rule-path like this
-   default-rule-path: /etc/suricata/rules/
+### 2.1 What Are Emerging Threats Rules?
+
+[Emerging Threats (ET)](https://rules.emergingthreats.net/) provides free, community-maintained IDS/IPS rules compatible with Suricata.
+
+### 2.2 Download and Install ET Rules
+
+```bash
+cd /tmp/
+curl -LO https://rules.emergingthreats.net/open/suricata-6.0.8/emerging.rules.tar.gz
+tar -xvzf emerging.rules.tar.gz
+sudo mkdir -p /etc/suricata/rules
+sudo mv rules/*.rules /etc/suricata/rules/
+sudo chmod 640 /etc/suricata/rules/*.rules
+```
+
+---
+
+## Step 3: Configure `suricata.yaml`
+
+Edit the main configuration:
+
+```bash
+sudo nano /etc/suricata/suricata.yaml
+```
+
+### 3.1 Define Network Variables
+
+Find and modify the following:
+
+```yaml
+HOME_NET: "<YOUR_IP_ADDRESS>"   # Replace with your server’s IP
+# EXTERNAL_NET: "!$HOME_NET"
+EXTERNAL_NET: "any"
+```
+
+To find your IP:
+
+```bash
+ip a
+```
+
+### 3.2 Configure Network Interface
+
+Search for `af-packet` section and update the `interface`:
+
+```yaml
+af-packet:
+  - interface: ens33  # Replace with your actual network interface
+```
+
+To find your interface:
+
+```bash
+ip link show
+```
+
+### 3.3 Set Rule Paths
+
+Set the correct rules path and pattern:
+
+```yaml
+default-rule-path: /etc/suricata/rules
+
 rule-files:
-    - "*.rules"
-    - It saying that any rule in the rules direcotry which has .rules extension should be executed OR treated as a the suricata rule path.
+  - "*.rules"
+```
 
-  Save and exit
-  Restart the suricta
-  sudo systemctl restart suricata
+This ensures all `*.rules` files in the directory are loaded.
 
-All suricata logs are being generated here: 
-ls /var/log/suricata/
-certs  core  eve.json  fast.log  files  stats.log  suricata.log
+Save and close the file.
 
+### 3.4 Restart Suricata
 
-Add the following configuration to the /var/ossec/etc/ossec.conf file of the Wazuh agent/server. This allows the Wazuh agent to read the Suricata logs file:
-<ossec_config>
-  <localfile>
-    <log_format>json</log_format>
-    <location>/var/log/suricata/eve.json</location>
-  </localfile>
-</ossec_config>
+```bash
+sudo systemctl restart suricata
+```
 
-restart the wazuh-manager
+Check status:
+
+```bash
+sudo systemctl status suricata
+```
+
+---
+
+## Step 4: Integrate Suricata with Wazuh
+
+### 4.1 Log Output from Suricata
+
+Suricata logs traffic events to:
+
+```bash
+/var/log/suricata/eve.json
+```
+
+### 4.2 Configure Wazuh to Monitor Suricata Logs
+
+Edit the Wazuh configuration:
+
+```bash
+sudo nano /var/ossec/etc/ossec.conf
+```
+
+Add the following inside `<ossec_config>`:
+
+```xml
+<localfile>
+  <log_format>json</log_format>
+  <location>/var/log/suricata/eve.json</location>
+</localfile>
+```
+
+### 4.3 Restart Wazuh Manager
+
+```bash
 sudo systemctl restart wazuh-manager
+```
 
+Verify services:
 
-So now let's check that our system are working fine
-check the suricata status
-sudo systemctl status suricata - must be running
+```bash
+sudo systemctl status wazuh-manager wazuh-dashboard wazuh-indexer
+```
 
-You can also check the status of wazuh-dashborad manager and indexer also
-systemctl status wazuh-manager wazuh-dashboard wazuh-indexer
+---
 
-Step 3: Simulate Attack using Kali Linux
-On Kali Linux terminal, run a SYN scan:
+## Step 5: Simulate a Network Attack
 
-nmap -sS -T4 <target-ip>
--sS: SYN scan
+On Kali Linux or another attacking machine:
 
--T4: Faster scan timing
+```bash
+nmap -sS -T4 <TARGET-IP>
+```
 
-This scan should trigger Suricata detection rules for port scanning.
+| Flag  | Purpose            |
+| ----- | ------------------ |
+| `-sS` | SYN Scan (stealth) |
+| `-T4` | Faster timing      |
 
-Step 4: View Alerts in Wazuh Dashboard
-Login to Wazuh Dashboard.
+This scan should trigger detection alerts in Suricata.
 
-Navigate to Security Events → Choose agent.
+---
 
-Filter by Rule Group: Suricata
+## Step 6: View Alerts in Wazuh Dashboard
 
-Look for alert like:
+1. Log in to the Wazuh Dashboard.
+2. Navigate to **Security Events**.
+3. Select the appropriate agent (where Suricata is installed).
+4. Filter by **Rule Group: Suricata**.
 
+Example alert:
+
+```
 ET SCAN Nmap Synchronous Scan
+```
+
+This confirms that Wazuh is properly ingesting Suricata alerts.
+
+---
+
+## Monitoring Logs via CLI
+
+View Suricata logs:
+
+```bash
+sudo cat /var/log/suricata/fast.log
+```
+
+View JSON alerts:
+
+```bash
+jq '.' /var/log/suricata/eve.json
+```
+
+---
+
+## Troubleshooting
+
+| Symptom                     | Possible Cause                 | Solution                                      |
+| --------------------------- | ------------------------------ | --------------------------------------------- |
+| No logs in `eve.json`       | Suricata not detecting traffic | Check interface, network rules, permissions   |
+| `Permission denied` in logs | Suricata can't read rules      | Fix file permissions on `/etc/suricata/rules` |
+| `No rules were loaded`      | Incorrect path or rule-files   | Check `default-rule-path` and `*.rules`       |
+| Service won’t start         | YAML syntax or invalid config  | Validate `suricata.yaml` using `suricata -T`  |
+
+---
+
+## Temporarily Stop Suricata
+
+If you need to pause logging:
+
+```bash
+sudo systemctl stop suricata
+sudo systemctl disable suricata  # Prevent on reboot
+```
+
+To resume:
+
+```bash
+sudo systemctl enable suricata
+sudo systemctl start suricata
+```
+
+---
+
+## Summary
+
+* Suricata is a powerful IDS/IPS that integrates seamlessly with Wazuh.
+* Rules are critical—without them, Suricata provides no detection.
+* The Emerging Threats rule set offers a great baseline.
+* Logs are ingested via the `eve.json` file using Wazuh’s `<localfile>` configuration.
+* Use the Wazuh Dashboard for easy visibility and alert triage.
+
+---
+
+Let me know if you'd like this exported as a `.md` file or integrated into your documentation repo.
