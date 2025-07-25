@@ -102,8 +102,8 @@ Find and modify the following:
 
 ```yaml
 HOME_NET: "<YOUR_IP_ADDRESS>"   # Replace with your server’s IP
-# EXTERNAL_NET: "!$HOME_NET"
-EXTERNAL_NET: "any"
+# EXTERNAL_NET: "!$HOME_NET"    # Comment it
+EXTERNAL_NET: "any"             # Un-comment it
 ```
 
 To find your IP:
