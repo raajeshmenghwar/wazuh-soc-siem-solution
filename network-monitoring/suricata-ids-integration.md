@@ -20,7 +20,12 @@ nano /etc/suricata/suricata.yaml
 1. Change the HOME_NET with your own iP Address, 
   simple open a new terminal/tab and fire the command ifconfig also note the interface aslo
   in my case my interface is ens33, and ip address is <YOUR_IP_ADDRESS>
-  
+2. Just say any instead of home_net in EXTERNAL_NET, so what are we doing, just commeting the #EXTERNAL_NET: "!$HOME_NET"
+    and uncommenting the EXTERNAL_NET: "any"
+    it'll look like this 
+    #EXTERNAL_NET: "!$HOME_NET"
+    EXTERNAL_NET: "any"
+
 
 
 Add the following configuration to the /var/ossec/etc/ossec.conf file of the Wazuh agent. This allows the Wazuh agent to read the Suricata logs file:
