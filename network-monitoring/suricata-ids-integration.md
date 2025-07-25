@@ -45,6 +45,10 @@ rule-files:
   Restart the suricta
   sudo systemctl restart suricata
 
+All suricata logs are being generated here: 
+ls /var/log/suricata/
+certs  core  eve.json  fast.log  files  stats.log  suricata.log
+
 
 Add the following configuration to the /var/ossec/etc/ossec.conf file of the Wazuh agent. This allows the Wazuh agent to read the Suricata logs file:
 <ossec_config>
