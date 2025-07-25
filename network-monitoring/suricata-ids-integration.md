@@ -1,3 +1,10 @@
+**Suricata** is an open-source network threat detection engine capable of functioning as:
+
+- IDS (Intrusion Detection System)
+- IPS (Intrusion Prevention System)
+- NSM (Network Security Monitoring) tool
+
+Developed by the **Open Information Security Foundation (OISF)**, it’s designed to process and analyze network traffic at high speeds using customizable **rulesets**.
 
 
 iF you don't have rules and IDS or IPS is nothing more than a device.
