@@ -1,3 +1,5 @@
+
+
 iF you don't have rules and IDS or IPS is nothing more than a device.
 Step 1: Installing Suricata and Rules
 Install Suricata on the Ubuntu endpoint. We tested this process with version 6.0.8 and it can take some time:
