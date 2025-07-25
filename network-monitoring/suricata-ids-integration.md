@@ -50,13 +50,18 @@ ls /var/log/suricata/
 certs  core  eve.json  fast.log  files  stats.log  suricata.log
 
 
-Add the following configuration to the /var/ossec/etc/ossec.conf file of the Wazuh agent. This allows the Wazuh agent to read the Suricata logs file:
+Add the following configuration to the /var/ossec/etc/ossec.conf file of the Wazuh agent/server. This allows the Wazuh agent to read the Suricata logs file:
 <ossec_config>
   <localfile>
     <log_format>json</log_format>
     <location>/var/log/suricata/eve.json</location>
   </localfile>
 </ossec_config>
+
+So now let's check that our system are working fine
+check the suricata status
+systemctl status suricata - must be running
+
 Step 3: Simulate Attack using Kali Linux
 On Kali Linux terminal, run a SYN scan:
 
