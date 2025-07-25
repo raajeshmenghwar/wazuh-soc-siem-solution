@@ -205,10 +205,8 @@ On Kali Linux or another attacking machine:
 nmap -sS -T4 <TARGET-IP>
 ```
 
-| Flag  | Purpose            |
-| ----- | ------------------ |
-| `-sS` | SYN Scan (stealth) |
-| `-T4` | Faster timing      |
+- `-sS` -> SYN Scan (stealth)
+- `-T4` -> Faster timing      
 
 This scan should trigger detection alerts in Suricata.
 
@@ -258,24 +256,6 @@ jq '.' /var/log/suricata/eve.json
 
 ---
 
-## Temporarily Stop Suricata
-
-If you need to pause logging:
-
-```bash
-sudo systemctl stop suricata
-sudo systemctl disable suricata  # Prevent on reboot
-```
-
-To resume:
-
-```bash
-sudo systemctl enable suricata
-sudo systemctl start suricata
-```
-
----
-
 ## Summary
 
 * Suricata is a powerful IDS/IPS that integrates seamlessly with Wazuh.
@@ -283,7 +263,3 @@ sudo systemctl start suricata
 * The Emerging Threats rule set offers a great baseline.
 * Logs are ingested via the `eve.json` file using Wazuh’s `<localfile>` configuration.
 * Use the Wazuh Dashboard for easy visibility and alert triage.
-
----
-
-Let me know if you'd like this exported as a `.md` file or integrated into your documentation repo.
