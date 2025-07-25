@@ -30,6 +30,14 @@ nano /etc/suricata/suricata.yaml
   By default interface is interface: eth0
   and we have to change it to our own i.e ens33
 
+4. Make to sure the defualt rule path for the suricata, 
+  default rule in suricata is : default-rule-path: /var/lib/suricata/rules
+  How to search for that in suricata.yaml, in nano simple press the ctl+w and search for rule-path and hit enter:
+  rule-files:
+    - suricata.rules
+    
+
+
 Add the following configuration to the /var/ossec/etc/ossec.conf file of the Wazuh agent. This allows the Wazuh agent to read the Suricata logs file:
 <ossec_config>
   <localfile>
