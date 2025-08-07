@@ -199,6 +199,7 @@ x.x.x.x:514
 
   * Go to **Explore > Discover**
   * Look for the failed login entry under the logs
+![wazuh-pfsense-alerts](../assets/wazuh-pfsense-alerts.png)
 
 If you see the failed login event captured by Wazuh, your integration is successful!
 
