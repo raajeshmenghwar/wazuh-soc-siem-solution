@@ -118,9 +118,10 @@ Setting the correct time zone helps maintain consistency in log timestamps for a
 ![pfsense-status-settings](../assets/pfsense-status-settings.png)
 3. Change the **Log Message Format** to `syslog`.
 4. (Optional) Enable **Reverse Display** to show newest logs first.
+![pfsense-status-settings-2](../assets/pfsense-status-settings-2.png)
 5. Enable **Send log messages to remote syslog server**.
 6. Set **Source Address** to `LAN`.
-
+![pfsense-status-settings-remote-syslog-server](../assets/pfsense-status-settings-remote-syslog-server.png)
 ---
 
 ### Step 7: Configure Remote Syslog Server
@@ -143,6 +144,8 @@ x.x.x.x:514
 > ⚠️ Avoid selecting "Everything" as it can overwhelm Wazuh with excessive logs.
 
 * Click **Save**.
+
+![alt text](image.png)
 
 ---
 
