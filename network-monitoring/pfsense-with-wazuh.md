@@ -145,14 +145,16 @@ x.x.x.x:514
 
 * Click **Save**.
 
-![alt text](image.png)
+![pfsense-status-settings-remote-server](../assets/pfsense-status-settings-remote-server.png)
 
 ---
 
 ### Step 8: Create a Firewall Rule for Syslog Traffic
 
 1. Go to **Firewall > Rules > LAN**.
+![firewall-rules](../assets/firewall-rules.png)
 2. Click the green **Add** button to create a new rule at the top.
+![firewall-rules-LAN](../assets/firewall-rules-LAN.png)
 3. Configure the rule:
 
    * **Protocol**: `UDP`
@@ -161,6 +163,7 @@ x.x.x.x:514
    * **Destination Port**: `514 (syslog)`
    * **Description**: `Forward syslog entries to Wazuh`
 4. Click **Save**, then **Apply Changes**.
+![firewall-rules-LAN-conf](../assets/firewall-rules-LAN-conf.png)
 
 ---
 
