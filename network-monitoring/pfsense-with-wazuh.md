@@ -83,7 +83,9 @@ To follow this setup, you must have the following:
 ### Step 3: Access the pfSense Web Interface
 
 * Identify the LAN IP of your pfSense VM.
+![Pfsense-LAN-IP](../assets/pfsense-lan-ip.png)
 * Open it in your browser. You may see a certificate warning—click **Advanced** > **Accept the Risk and Continue**.
+![pfsense-brower-UI](../assets/pfsense-brower-UI.png)
 * Login with:
 
   * **Username**: `admin`
