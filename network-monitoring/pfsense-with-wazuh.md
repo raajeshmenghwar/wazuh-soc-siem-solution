@@ -83,7 +83,7 @@ To follow this setup, you must have the following:
 ### Step 3: Access the pfSense Web Interface
 
 * Identify the LAN IP of your pfSense VM.
-![Pfsense-LAN-IP](../assets/pfsense-lan-ip.png)
+![pfsense-LAN-IP](../assets/pfsense-lan-ip.png)
 * Open it in your browser. You may see a certificate warning—click **Advanced** > **Accept the Risk and Continue**.
 ![pfsense-brower-UI](../assets/pfsense-brower-UI.png)
 * Login with:
@@ -113,7 +113,9 @@ Setting the correct time zone helps maintain consistency in log timestamps for a
 ### Step 6: Enable Syslog Forwarding on pfSense
 
 1. Navigate to **Status > System Logs**.
+![pfsense-status](../assets/pfsense-status.png)
 2. Click on the **Settings** tab.
+![pfsense-status-settings](../assets/pfsense-status-settings.png)
 3. Change the **Log Message Format** to `syslog`.
 4. (Optional) Enable **Reverse Display** to show newest logs first.
 5. Enable **Send log messages to remote syslog server**.
