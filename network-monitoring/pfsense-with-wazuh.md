@@ -184,7 +184,7 @@ x.x.x.x:514
 </remote>
 ```
 
-> * Replace `x.x.x.x/24` with your subnet (e.g., `192.168.1.0/24`)
+> * Replace `x.x.x.x/24` with your pfsense subnet (e.g., `192.168.1.0/24`)
 > * Replace `x.x.x.x` under `local_ip` with the IP of your Wazuh Manager
 
 5. Click **Save** and then **Restart Manager** > **Confirm**.
