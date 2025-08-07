@@ -1,191 +1,221 @@
 # Integrating pfSense Firewall Logs with Wazuh SIEM
 
-Before we begin the installation and configuration process, it is essential to understand some foundational concepts—namely **what a firewall is** and **what pfSense does**. This will give you a clearer perspective on the importance of integrating pfSense with Wazuh for log collection and security monitoring.
+This guide provides a comprehensive walkthrough for integrating **pfSense firewall logs** into the **Wazuh SIEM platform**. This integration enables centralized logging, enhances network visibility, and improves threat detection capabilities. Before diving into the configuration steps, it’s important to understand the foundational components involved in this setup.
+
 
 ## What is a Firewall?
 
-A **firewall** is a network security system—either software-based, hardware-based, or a combination of both—that **monitors and filters network traffic**. It operates on the basis of **predefined security rules**, and its primary function is to **permit or block data packets** between trusted and untrusted networks.
+A **firewall** is a network security device that can be software-based, hardware-based, or a combination of both. It monitors and filters incoming and outgoing network traffic based on a defined set of security rules. Its primary role is to permit or block data packets between trusted internal networks and untrusted external networks (such as the internet).
 
-Think of a firewall as a **gatekeeper** or **security checkpoint** between your internal private network and the outside world (like the internet). It ensures that only authorized traffic is allowed in or out.
+Think of a firewall as a **gatekeeper** that ensures only authorized traffic can pass into or out of your network.
 
-> **Need a deeper dive into Firewalls and Next-Gen Firewalls (NGFW)?**
-> Check out my detailed article on Medium: [Deep Dive into Firewalls](https://medium.com/@rajeshmenghwar)
+> **Want a deeper understanding of firewalls and next-generation firewalls (NGFW)?**  
+> Read this article: [Deep Dive into Firewalls – by Rajesh Menghwar](https://medium.com/@rajeshmenghwar)
+
 
 ## What is pfSense?
 
-**pfSense** is a **free and open-source firewall and router software** based on **FreeBSD**. It is designed to deliver **enterprise-grade features** for securing networks in **home labs**, **small businesses**, and **corporate environments**.
+**pfSense** is a free and open-source firewall and router software distribution based on **FreeBSD**. It offers a comprehensive suite of features designed for securing networks of all sizes, from home labs to enterprise environments.
 
 ### Key Features of pfSense:
+- Stateful Packet Inspection (SPI)
+- VPN Support (IPSec, OpenVPN, WireGuard)
+- DNS and DHCP Services
+- Network Address Translation (NAT)
+- Logging and Real-time Monitoring
+- Traffic Shaping and Load Balancing
+- Intrusion Detection/Prevention (via Suricata or Snort)
 
-* Stateful packet inspection
-* VPN (IPSec, OpenVPN)
-* DNS/DHCP services
-* Network Address Translation (NAT)
-* Logging and alerting
-* Traffic shaping
-* IDS/IPS (via Suricata or Snort)
+> pfSense is maintained by **Electric Sheep Fencing LLC** and is widely recognized as one of the most robust and flexible open-source firewall platforms available today.
 
-> Developed by **Electric Sheep Fencing LLC**, pfSense has grown into one of the most trusted solutions in the open-source community.
+> **Explore more on pfSense setups and labs:**  
+> [GitHub: Working with Firewalls - pfSense](https://github.com/raajeshmenghwar/working-with-firewalls/tree/main/pfsense)
 
-> **Want to learn more about pfSense setup and use cases?**
-> Visit my GitHub documentation: [Working with Firewalls - pfSense](https://github.com/raajeshmenghwar/working-with-firewalls/tree/main/pfsense)
 
 ## Why Integrate pfSense with Wazuh?
 
-The integration of pfSense with **Wazuh**, a powerful open-source **Security Information and Event Management (SIEM)** platform, allows you to:
+**Wazuh** is an open-source Security Information and Event Management (SIEM) solution that provides log analysis, intrusion detection, vulnerability detection, and more.
 
-* Collect real-time firewall logs
-* Monitor network traffic anomalies
-* Detect unauthorized access attempts
-* Centralize and correlate log data
+Integrating pfSense with Wazuh allows you to:
+- Centralize pfSense log data for analysis
+- Detect network anomalies in real-time
+- Correlate firewall events with endpoint security logs
+- Improve visibility across the security operations center (SOC)
 
-This integration enhances **network visibility** and allows **proactive threat detection**.
 
 ## Prerequisites
 
-To follow this setup, you must have the following:
+Before proceeding, ensure the following environment is in place:
 
-* A virtualized environment (VMware/VMware ESXi)
-* A working Wazuh Stack:
+- A virtualized environment (VMware Workstation, ESXi, or similar)
+- A fully configured **Wazuh stack** including:
+  - Wazuh Manager
+  - Wazuh Indexer
+  - Wazuh Dashboard
+- A **pfSense VM** installed and accessible
 
-  * Wazuh Manager
-  * Wazuh Indexer
-  * Wazuh Dashboard
-* A pfSense virtual machine installed and configured
 
 ## Step-by-Step Integration Guide
 
-### Step 1: Boot Your Virtual Machines
+### Step 1: Boot the Virtual Machines
 
 1. Power on your **pfSense** VM.
-2. Boot your **Linux VM** (e.g., Ubuntu).
-3. Start your **Wazuh VM** and log in using the default credentials (e.g., `admin/admin`).
+2. Start your **Linux VM** (e.g., Ubuntu).
+3. Boot up your **Wazuh VM** and log in using the default credentials (e.g., `admin/admin`).
+
 
 ### Step 2: Access the Wazuh Dashboard
 
-* On your Linux VM, open a browser and navigate to the Wazuh Dashboard using its IP.
-* If you don't know the IP, run `ip a` on the Wazuh VM to find it.
+- On the Linux VM, open a browser and enter the IP address of your Wazuh Dashboard.
+- If the IP is unknown, run `ip a` in the terminal of the Wazuh VM to locate it.
+
 
 ### Step 3: Access the pfSense Web Interface
 
-* Identify the LAN IP of your pfSense VM.
-![pfsense-LAN-IP](../assets/pfsense-lan-ip.png)
-* Open it in your browser. You may see a certificate warning—click **Advanced** > **Accept the Risk and Continue**.
-![pfsense-brower-UI](../assets/pfsense-brower-UI.png)
-* Login with:
+- Find the **LAN IP address** displayed in the pfSense VM console.  
+  ![pfSense LAN IP](../assets/pfsense-lan-ip.png)
 
-  * **Username**: `admin`
-  * **Password**: `pfsense`
+- Open the IP in your browser. If prompted with a certificate warning, click **Advanced > Accept the Risk and Continue**.  
+  ![pfSense Browser UI](../assets/pfsense-brower-UI.png)
 
-### Step 4: Change pfSense Default Admin Password
+- Login credentials:
+  - **Username:** `admin`
+  - **Password:** `pfsense`
 
-* Click the **"Change the password"** warning prompt.
-* Set a secure password for the admin account and click **Save**.
 
-### Step 5: Set the Timezone in pfSense
+### Step 4: Change the Default Admin Password
 
-* Navigate to **System > General Setup**.
-* Scroll down and set your local **Time Zone**.
-* Click **Save**.
+- After logging in, follow the prompt to **change the default password**.
+- Set a secure password and click **Save**.
 
-Setting the correct time zone helps maintain consistency in log timestamps for analysis.
+
+### Step 5: Set Timezone in pfSense
+
+1. Navigate to **System > General Setup**.
+2. Scroll to the **Timezone** section and select your local time zone.
+3. Click **Save**.
+
+> Setting the correct timezone ensures accurate timestamping of log entries, which is critical for log correlation.
+
 
 ### Step 6: Enable Syslog Forwarding on pfSense
 
-1. Navigate to **Status > System Logs**.
-![pfsense-status](../assets/pfsense-status.png)
-2. Click on the **Settings** tab.
-![pfsense-status-settings](../assets/pfsense-status-settings.png)
-3. Change the **Log Message Format** to `syslog`.
-4. (Optional) Enable **Reverse Display** to show newest logs first.
-![pfsense-status-settings-2](../assets/pfsense-status-settings-2.png)
-5. Enable **Send log messages to remote syslog server**.
-6. Set **Source Address** to `LAN`.
-![pfsense-status-settings-remote-syslog-server](../assets/pfsense-status-settings-remote-syslog-server.png)
-### Step 7: Configure Remote Syslog Server
+1. Go to **Status > System Logs**.  
+   ![System Logs](../assets/pfsense-status.png)
 
-* In the **Remote log servers** field, enter your Wazuh Manager IP and port like this:
+2. Click on the **Settings** tab.  
+   ![Log Settings](../assets/pfsense-status-settings.png)
+
+3. Set `Log Message Format` to `syslog`.
+
+4. (Optional) Enable `Reverse Display` to view the latest logs at the top.  
+   ![Settings Example](../assets/pfsense-status-settings-2.png)
+
+5. Enable `Send log messages to remote syslog server`.
+
+6. Set `Source Address` to `LAN`.  
+   ![Syslog Server Configuration](../assets/pfsense-status-settings-remote-syslog-server.png)
+
+
+### Step 7: Configure the Remote Syslog Server
+
+In the **Remote Log Servers** field, input your Wazuh Manager IP and the syslog port:
 
 ```
-x.x.x.x:514
-```
 
-> The port **514/UDP** is used for sending syslog messages.
+192.168.1.10:514
 
-* Under **Remote Syslog Contents**, enable:
+````
 
-  * System Events
-  * Firewall Events
-  * DNS Events
-  * DHCP Events
+> The port `514/UDP` is the default for syslog messages.
 
-> ⚠️ Avoid selecting "Everything" as it can overwhelm Wazuh with excessive logs.
+Under **Remote Syslog Contents**, select only:
 
-* Click **Save**.
+- System Events
+- Firewall Events
+- DNS Events
+- DHCP Events
 
-![pfsense-status-settings-remote-server](../assets/pfsense-status-settings-remote-server.png)
+> **Important:** Avoid selecting "Everything" to prevent excessive and unnecessary log ingestion.  
+> ![Remote Syslog Server](../assets/pfsense-status-settings-remote-server.png)
 
-### Step 8: Create a Firewall Rule for Syslog Traffic
+Click **Save** to apply the configuration.
 
-1. Go to **Firewall > Rules > LAN**.
-![firewall-rules](../assets/firewall-rules.png)
-2. Click the green **Add** button to create a new rule at the top.
-![firewall-rules-LAN](../assets/firewall-rules-LAN.png)
+
+### Step 8: Add a Firewall Rule to Allow Syslog Traffic
+
+1. Go to **Firewall > Rules > LAN**.  
+   ![Firewall Rules](../assets/firewall-rules.png)
+
+2. Click the green **Add** button to insert a new rule at the top.  
+   ![Add Rule](../assets/firewall-rules-LAN.png)
+
 3. Configure the rule:
+   - **Protocol**: `UDP`
+   - **Source**: `LAN Subnet`
+   - **Destination**: `Single host or alias` → enter Wazuh Manager IP
+   - **Destination Port**: `514`
+   - **Description**: `Forward syslog entries to Wazuh`
 
-   * **Protocol**: `UDP`
-   * **Source**: `LAN Subnet`
-   * **Destination**: `Single host` → your **Wazuh IP**
-   * **Destination Port**: `514 (syslog)`
-   * **Description**: `Forward syslog entries to Wazuh`
-4. Click **Save**, then **Apply Changes**.
-![firewall-rules-LAN-conf](../assets/firewall-rules-LAN-conf.png)
+4. Click **Save**, then click **Apply Changes**.  
+   ![Rule Config](../assets/firewall-rules-LAN-conf.png)
 
-### Step 9: Configure Wazuh to Listen for Syslog Messages
 
-1. In your browser, login to the **Wazuh Dashboard**.
+### Step 9: Configure Wazuh to Listen for Syslog
+
+1. Access the **Wazuh Dashboard** in your browser.
 2. Go to **Server Management > Settings**.
 3. Click **Edit Configuration**.
-4. Add the following XML block to enable Wazuh to listen for syslog input:
+4. Add the following XML configuration block:
 
 ```xml
 <remote>
   <connection>syslog</connection>
   <port>514</port>
   <protocol>udp</protocol>
-  <allowed-ips>x.x.x.x/24</allowed-ips>
-  <local_ip>x.x.x.x</local_ip>
+  <allowed-ips>192.168.1.0/24</allowed-ips>
+  <local_ip>192.168.1.10</local_ip>
 </remote>
-```
+````
 
-> * Replace `x.x.x.x/24` with your pfsense subnet (e.g., `192.168.1.0/24`)
-> * Replace `x.x.x.x` under `local_ip` with the IP of your Wazuh Manager
+> Replace the values:
+> * `allowed-ips`: Subnet from which pfSense will send logs (e.g., `192.168.1.0/24`)
+> * `local_ip`: Wazuh Manager's IP address
 
-5. Click **Save** and then **Restart Manager** > **Confirm**.
+5. Click **Save**, then **Restart Manager** and confirm.
 
-### Step 10: Test the Integration
 
-* Log out from the pfSense Web GUI.
-* Try logging in again with **incorrect credentials** to generate a failed login event.
-* Head back to the **Wazuh Dashboard**:
+### Step 10: Validate the Integration
 
-  * Go to **Explore > Discover**
-  * Look for the failed login entry under the logs
-![wazuh-pfsense-alerts](../assets/wazuh-pfsense-alerts.png)
+To test the integration:
 
-If you see the failed login event captured by Wazuh, your integration is successful!
+1. Log out of the pfSense web GUI.
+2. Attempt a failed login with incorrect credentials to generate an event.
+3. Go back to **Wazuh Dashboard**:
+
+   * Navigate to **Explore > Discover**
+   * Search for the failed login log under `syslog` source
+
+   ![Wazuh pfSense Alert](../assets/wazuh-pfsense-alerts.png)
+
+If the log appears, the integration is working correctly.
+
 
 ## Summary
 
-By integrating **pfSense** with **Wazuh**, you've enabled powerful network-level visibility within your SOC/SIEM setup. The logs collected from pfSense will now be centrally analyzed by Wazuh, allowing for:
+By integrating **pfSense** with **Wazuh**, you have created a streamlined and centralized solution for collecting, parsing, and monitoring firewall events. This setup supports:
 
+* Real-time detection of suspicious activity
+* Centralized log aggregation
 * Better incident response
-* Correlated detection of anomalies
-* Centralized firewall log management
+* Improved SOC visibility
 
-## 🔗 References and Further Reading
+> This integration is foundational for building out a complete SOC/SIEM environment. In the next guide, we will explore how to create alerts and dashboards in Wazuh based on pfSense logs.
 
-* [Wazuh Documentation](https://documentation.wazuh.com)
+
+## References and Further Reading
+
+* [Wazuh Official Documentation](https://documentation.wazuh.com)
 * [pfSense Official Docs](https://docs.netgate.com/pfsense/en/latest/)
 * [Deep Dive into Firewalls (Rajesh Menghwar - Medium)](https://medium.com/@rajeshmenghwar)
 * [GitHub: Working with Firewalls - pfSense](https://github.com/raajeshmenghwar/working-with-firewalls/tree/main/pfsense)
