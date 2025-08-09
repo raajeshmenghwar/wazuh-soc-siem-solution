@@ -150,10 +150,9 @@ Once you have restarted the Wazuh Manager, it is important to confirm that the O
 1. Wait a few minutes after restarting the Wazuh service.
 2. Log in to your **Wazuh Dashboard**.
 3. Navigate to:
+
 ```
-
 Modules → Office 365
-
 ```
 4. Here you should begin to see **alerts** and **events** from your Microsoft 365 tenant.
 
