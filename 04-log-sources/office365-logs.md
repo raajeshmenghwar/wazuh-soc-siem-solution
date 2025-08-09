@@ -142,9 +142,15 @@ After saving the `ossec.conf` file, restart the Wazuh service to apply the new c
 sudo systemctl restart wazuh-manager
 ```
 
+
 ### 5\. Verification and Troubleshooting
 
   * **Verification:** After restarting, wait a few minutes and log in to your **Wazuh dashboard**. Navigate to the **Modules** section and select **Office 365**. You should begin to see alerts and events populated from your tenant.
+
+  At this point, you should start to see events being digested in the events dashboard.
+
+Now, log in to tenant, you must have differnt atleast two user account if not create them, and then open an incogition and log in to that accounts, let's say, I've four accounts in my tenant, that are tahir, ifran, rkum4r, 
+
   * **Common Errors:**
       * **"Invalid client secret provided"**: This means you've used the Client Secret ID instead of the Client Secret Value. You must generate a new secret and copy its value.
       * **"Tenant does not exist"**: This usually indicates that the `tenant_id` and `client_id` have been swapped in the configuration. Double-check that they are in the correct fields.
