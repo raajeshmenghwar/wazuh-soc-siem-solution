@@ -201,6 +201,7 @@ In this example, we will log in as a non-admin user (e.g., "Ifran Ali").
 When you go back to the **Office 365** module in Wazuh, you should now see audit logs for the activities you performed.
 
 ![office365-integration-dashboard-view](image-8.png)
+![office365-integration-dashboard-view-2](image.png)
 
 Below is an example of what the logs might look like (with sensitive details removed):
 
