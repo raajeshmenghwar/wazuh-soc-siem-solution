@@ -161,7 +161,169 @@ Now here's what the magic happens, now we are in ifran's account, do whatever yo
 
 After all of things, wait for a few minutes, grab a coffee, you've done your job, and then come back to wazuh dashboard, head to the office365 module and here you'll see the all logs/events of activities you have done.
 Let's have a look.
+![office365-integration-dashboard-view](image-8.png)
 
+Explain these briefly, without revealing the iP addresses or my email address:
+
+
+timestamp
+
+data.office365.Subscription
+
+data.office365.Operation
+
+data.office365.UserId
+
+data.office365.ClientIP
+
+rule.level
+
+rule.id
+
+Aug 9, 2025 @ 10:33:06.462
+Audit.AzureActiveDirectory
+UserLoggedIn
+rajesh.kumar@1bhzkm.onmicrosoft.com
+121.52.155.178
+3
+91545
+
+Aug 9, 2025 @ 10:08:52.251
+Audit.AzureActiveDirectory
+UserLoggedIn
+Irfran.Ali@1bhzkm.onmicrosoft.com
+121.52.155.178
+3
+91545
+
+Aug 9, 2025 @ 10:06:24.209
+Audit.SharePoint
+SharingInheritanceBroken
+irfran.ali@1bhzkm.onmicrosoft.com
+2603:1036:301:2198::5
+3
+91544
+
+Aug 9, 2025 @ 10:06:24.199
+Audit.SharePoint
+GroupAdded
+irfran.ali@1bhzkm.onmicrosoft.com
+121.52.155.178
+3
+91536
+
+Aug 9, 2025 @ 10:06:24.199
+Audit.SharePoint
+AddedToGroup
+irfran.ali@1bhzkm.onmicrosoft.com
+121.52.155.178
+3
+91544
+
+Aug 9, 2025 @ 10:06:24.177
+Audit.SharePoint
+AddedToGroup
+irfran.ali@1bhzkm.onmicrosoft.com
+121.52.155.178
+3
+91544
+
+Aug 9, 2025 @ 10:06:24.167
+Audit.SharePoint
+AddedToGroup
+irfran.ali@1bhzkm.onmicrosoft.com
+121.52.155.178
+3
+91544
+
+Aug 9, 2025 @ 10:06:24.155
+Audit.SharePoint
+SharingSet
+irfran.ali@1bhzkm.onmicrosoft.com
+121.52.155.178
+3
+91544
+
+Aug 9, 2025 @ 10:06:24.144
+Audit.SharePoint
+SharingInheritanceBroken
+irfran.ali@1bhzkm.onmicrosoft.com
+121.52.155.178
+3
+91544
+
+Aug 9, 2025 @ 10:06:24.133
+Audit.SharePoint
+AddedToGroup
+irfran.ali@1bhzkm.onmicrosoft.com
+
+
+
+121.52.155.178
+3
+91544
+
+Aug 9, 2025 @ 10:06:24.124
+Audit.SharePoint
+SharingSet
+irfran.ali@1bhzkm.onmicrosoft.com
+121.52.155.178
+3
+91544
+
+Aug 9, 2025 @ 10:06:24.117
+Audit.SharePoint
+CompanyLinkCreated
+irfran.ali@1bhzkm.onmicrosoft.com
+121.52.155.178
+3
+91544
+
+Aug 9, 2025 @ 10:06:24.103
+Audit.SharePoint
+SharingLinkCreated
+irfran.ali@1bhzkm.onmicrosoft.com
+121.52.155.178
+3
+91544
+
+Aug 9, 2025 @ 10:06:24.088
+Audit.SharePoint
+SharingSet
+irfran.ali@1bhzkm.onmicrosoft.com
+121.52.155.178
+3
+91544
+
+Aug 9, 2025 @ 10:06:24.071
+Audit.SharePoint
+FileAccessed
+irfran.ali@1bhzkm.onmicrosoft.com
+121.52.155.178
+3
+91537
+
+Aug 9, 2025 @ 10:06:24.053
+Audit.SharePoint
+FileAccessed
+irfran.ali@1bhzkm.onmicrosoft.com
+121.52.155.178
+3
+91537
+
+Aug 9, 2025 @ 10:06:17.258
+Audit.AzureActiveDirectory
+UserLoggedIn
+Irfran.Ali@1bhzkm.onmicrosoft.com
+121.52.155.178
+3
+91545
+
+Aug 9, 2025 @ 10:06:17.247
+Audit.AzureActiveDirectory
+UserLoggedIn
+Irfran.Ali@1bhzkm.onmicrosoft.com
+121.52.155.178
 
 
   * **Common Errors:**
