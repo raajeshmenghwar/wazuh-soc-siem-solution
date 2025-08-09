@@ -153,6 +153,7 @@ Now, log in to tenant https://entra.microsoft.com/ , you must have differnt atle
 ![office365-integration-tenet](image-6.png)
 
 Now in my case, What I'm doing is I'm logging into the Ifran Ali account's. Becuase I'm the admin of the tenant and I know reset the Ifran Password. So let's do that, reset the ifran password, Copy that password, and open another incognito window or another brower and login into that account. 
+![office365-integration-reset-password](image-7.png)
 
 
   * **Common Errors:**
