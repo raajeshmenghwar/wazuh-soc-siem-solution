@@ -155,6 +155,14 @@ Now, log in to tenant https://entra.microsoft.com/ , you must have differnt atle
 Now in my case, What I'm doing is I'm logging into the Ifran Ali account's. Becuase I'm the admin of the tenant and I know reset the Ifran Password. So let's do that, reset the ifran password, Copy that password, and open another incognito window or another brower and login into that account. 
 ![office365-integration-reset-password](image-7.png)
 
+Go to https://office.com login with the email address and input the temporary password you set there, may you have to set the MFA, do it and it will redirect you the main office page i.e copilot.
+
+Now here's what the magic happens, now we are in ifran's account, do whatever you want, open an outlook, draft and email, send it to another user i.e Tahir/rkumr4/jawad etc in my case, upload any file to the one drive, view it, share it with other users, and then delete it.
+
+After all of things, wait for a few minutes, grab a coffee, you've done your job, and then come back to wazuh dashboard, head to the office365 module and here you'll see the all logs/events of activities you have done.
+Let's have a look.
+
+
 
   * **Common Errors:**
       * **"Invalid client secret provided"**: This means you've used the Client Secret ID instead of the Client Secret Value. You must generate a new secret and copy its value.
