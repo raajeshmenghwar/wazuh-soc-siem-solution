@@ -4,6 +4,7 @@ This document provides a comprehensive, step-by-step guide for integrating Micro
 
 This guide is designed for beginners and breaks down each stage of the process, explaining key concepts in simple terms.
 
+## Note: Credit to Wazuh documentation, some screenshots taken from official documentation to make it easier and not having to mark out sensitive data.
 
 ### 1. Prerequisites
 
