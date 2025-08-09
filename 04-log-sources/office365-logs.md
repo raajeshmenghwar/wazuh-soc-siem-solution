@@ -4,7 +4,7 @@ This document provides a comprehensive, step-by-step guide for integrating Micro
 
 This guide is designed for beginners and breaks down each stage of the process, explaining key concepts in simple terms.
 
-## Note: Credit to Wazuh documentation, some screenshots taken from official documentation to make it easier and not having to mark out sensitive data.
+#### Note: Credit to Wazuh documentation, some screenshots taken from official documentation to make it easier and not having to mark out sensitive data.
 
 ### 1. Prerequisites
 
@@ -44,7 +44,7 @@ The application serves as Wazuh's identity for secure authentication.
 2.  In the search bar, type `App registrations` and select it.
 3.  Click **New registration**.
 ![office365-integration-new-registration](image.png)
-4.  **Name:** Provide a descriptive name like `Wazuh-Office365-Integration`.
+4.  **Name:** Provide a descriptive name like `Wazuh`.
 ![office365-integration-registration](image-1.png)
 5.  **Supported account types:** Select the default option, `Single tenant`.
 6.  Click **Register**.
