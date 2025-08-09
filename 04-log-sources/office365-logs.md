@@ -150,6 +150,9 @@ sudo systemctl restart wazuh-manager
   At this point, you should start to see events being digested in the events dashboard.
 
 Now, log in to tenant https://entra.microsoft.com/ , you must have differnt atleast two user account if not create them, and then open an incogition and log in to that accounts, let's say, I've four accounts in my tenant, that are tahir, ifran, rkum4r and jawad.
+![office365-integration-tenet](image-6.png)
+
+Now in my case, What I'm doing is I'm logging into the Ifran Ali account's. Becuase I'm the admin of the tenant and I know reset the Ifran Password. So let's do that, reset the ifran password, Copy that password, and open another incognito window or another brower and login into that account. 
 
 
   * **Common Errors:**
