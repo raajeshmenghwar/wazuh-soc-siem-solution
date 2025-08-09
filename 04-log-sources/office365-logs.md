@@ -141,204 +141,126 @@ After saving the `ossec.conf` file, restart the Wazuh service to apply the new c
 ```bash
 sudo systemctl restart wazuh-manager
 ```
+### 5. Verification and Troubleshooting
 
+Once you have restarted the Wazuh Manager, it is important to confirm that the Office 365 integration is working as expected.
 
-### 5\. Verification and Troubleshooting
+#### Step 5.1: Checking the Wazuh Dashboard
 
-  * **Verification:** After restarting, wait a few minutes and log in to your **Wazuh dashboard**. Navigate to the **Modules** section and select **Office 365**. You should begin to see alerts and events populated from your tenant.
+1. Wait a few minutes after restarting the Wazuh service.
+2. Log in to your **Wazuh Dashboard**.
+3. Navigate to:
+```
 
-  At this point, you should start to see events being digested in the events dashboard.
+Modules → Office 365
 
-Now, log in to tenant https://entra.microsoft.com/ , you must have differnt atleast two user account if not create them, and then open an incogition and log in to that accounts, let's say, I've four accounts in my tenant, that are tahir, ifran, rkum4r and jawad.
-![office365-integration-tenet](image-6.png)
+```
+4. Here you should begin to see **alerts** and **events** from your Microsoft 365 tenant.
 
-Now in my case, What I'm doing is I'm logging into the Ifran Ali account's. Becuase I'm the admin of the tenant and I know reset the Ifran Password. So let's do that, reset the ifran password, Copy that password, and open another incognito window or another brower and login into that account. 
-![office365-integration-reset-password](image-7.png)
+If you do not see any events yet, remember:
+- The Office 365 Management API may take **5–10 minutes** to deliver new events.
+- Only activities performed after integration will appear.
 
-Go to https://office.com login with the email address and input the temporary password you set there, may you have to set the MFA, do it and it will redirect you the main office page i.e copilot.
+---
 
-Now here's what the magic happens, now we are in ifran's account, do whatever you want, open an outlook, draft and email, send it to another user i.e Tahir/rkumr4/jawad etc in my case, upload any file to the one drive, view it, share it with other users, and then delete it.
+#### Step 5.2: Generating Test Activity in Office 365
 
-After all of things, wait for a few minutes, grab a coffee, you've done your job, and then come back to wazuh dashboard, head to the office365 module and here you'll see the all logs/events of activities you have done.
-Let's have a look.
+To confirm the integration, you can manually perform some test actions in your tenant.
+
+1. **Sign in to your Microsoft Entra Admin Center:**  
+[https://entra.microsoft.com/](https://entra.microsoft.com/)  
+
+2. **Ensure you have at least two user accounts** in your tenant.  
+If you only have one, create a second for testing.
+
+3. **Log in to one of the test accounts in an Incognito/Private browser window.**  
+In this example, we will log in as a non-admin user (e.g., "Ifran Ali").
+
+4. **As the Tenant Admin:**
+- Reset the password for that test user.
+- Copy the temporary password provided.
+
+![office365-integration-tenet](image-6.png)  
+![office365-integration-reset-password](image-7.png)  
+
+5. **Log in to the test account via** [https://office.com](https://office.com)  
+- Use the email address and temporary password.
+- If prompted, set up MFA (Multi-Factor Authentication).
+- Complete the password reset process.
+
+6. **Perform some activities** while logged in as the test user:
+- Open Outlook and send an email to another user in your tenant.
+- Upload a file to OneDrive.
+- View and share that file with other users.
+- Delete the file.
+
+7. Wait a few minutes, then return to your **Wazuh Dashboard**.
+
+---
+
+#### Step 5.3: Viewing the Logs in Wazuh
+
+When you go back to the **Office 365** module in Wazuh, you should now see audit logs for the activities you performed.
+
 ![office365-integration-dashboard-view](image-8.png)
 
-Explain these briefly, without revealing the iP addresses or my email address:
+Below is an example of what the logs might look like (with sensitive details removed):
 
+| Timestamp              | Subscription               | Operation                  | UserId               | ClientIP      | Rule Level | Rule ID |
+|------------------------|----------------------------|----------------------------|----------------------|--------------|------------|---------|
+| Aug 9, 2025 @ 10:33:06 | Audit.AzureActiveDirectory | UserLoggedIn               | testuser@domain.com  | [REDACTED]   | 3          | 91545   |
+| Aug 9, 2025 @ 10:06:24 | Audit.SharePoint           | FileAccessed               | testuser@domain.com  | [REDACTED]   | 3          | 91537   |
+| Aug 9, 2025 @ 10:06:24 | Audit.SharePoint           | SharingLinkCreated         | testuser@domain.com  | [REDACTED]   | 3          | 91544   |
+| Aug 9, 2025 @ 10:06:17 | Audit.AzureActiveDirectory | UserLoggedIn               | testuser@domain.com  | [REDACTED]   | 3          | 91545   |
 
-timestamp
+---
 
-data.office365.Subscription
+#### Step 5.4: Understanding the Key Fields
 
-data.office365.Operation
+- **timestamp** — The exact time when the activity occurred.
+- **data.office365.Subscription** — The service or module the event came from, e.g.:
+- `Audit.AzureActiveDirectory` → login and identity events.
+- `Audit.SharePoint` → file, folder, and sharing activities.
+- **data.office365.Operation** — The specific action performed:
+- `UserLoggedIn` → A user signed into Microsoft 365.
+- `FileAccessed` → A file was opened/viewed.
+- `SharingLinkCreated` → A share link was created for a file/folder.
+- **data.office365.UserId** — The account that performed the action.
+- **data.office365.ClientIP** — The IP address from where the action was performed (redacted here).
+- **rule.level** — Indicates severity or importance (e.g., 3 = informational).
+- **rule.id** — The unique identifier for the detection rule in Wazuh.
 
-data.office365.UserId
+---
 
-data.office365.ClientIP
+#### Step 5.5: Common Errors and Fixes
 
-rule.level
+- **"Invalid client secret provided"**  
+This usually happens if you entered the **Client Secret ID** instead of the **Client Secret Value**.  
+Solution: Generate a new secret and copy its value immediately.
 
-rule.id
+- **"Tenant does not exist"**  
+This often means the `tenant_id` and `client_id` were swapped in the configuration file.  
+Solution: Double-check that each is in the correct field.
 
-Aug 9, 2025 @ 10:33:06.462
-Audit.AzureActiveDirectory
-UserLoggedIn
-rajesh.kumar@1bhzkm.onmicrosoft.com
-121.52.155.178
-3
-91545
+- **Events not appearing immediately**  
+The Office 365 API has a small delay (5–10 minutes) before new activities are available.  
+Solution: Wait and refresh the dashboard.
 
-Aug 9, 2025 @ 10:08:52.251
-Audit.AzureActiveDirectory
-UserLoggedIn
-Irfran.Ali@1bhzkm.onmicrosoft.com
-121.52.155.178
-3
-91545
+---
 
-Aug 9, 2025 @ 10:06:24.209
-Audit.SharePoint
-SharingInheritanceBroken
-irfran.ali@1bhzkm.onmicrosoft.com
-2603:1036:301:2198::5
-3
-91544
+### 6. Understanding the Office 365 Logs
 
-Aug 9, 2025 @ 10:06:24.199
-Audit.SharePoint
-GroupAdded
-irfran.ali@1bhzkm.onmicrosoft.com
-121.52.155.178
-3
-91536
+The events collected through this integration are **audit logs**.  
+These logs:
+- Show **who** did **what**, and **when**.
+- Do **not** include sensitive content like email text or file data.
 
-Aug 9, 2025 @ 10:06:24.199
-Audit.SharePoint
-AddedToGroup
-irfran.ali@1bhzkm.onmicrosoft.com
-121.52.155.178
-3
-91544
+Examples of common categories:
+- **Exchange Online:**  
+`Send`, `Delete`, `MailItemsAccessed`.
+- **SharePoint / OneDrive:**  
+`FileUploaded`, `FileDeleted`, `SharingSet`, `FileAccessed`.
+- **Azure Active Directory:**  
+`UserLoggedIn`, `UserPasswordChanged`, admin changes.
 
-Aug 9, 2025 @ 10:06:24.177
-Audit.SharePoint
-AddedToGroup
-irfran.ali@1bhzkm.onmicrosoft.com
-121.52.155.178
-3
-91544
-
-Aug 9, 2025 @ 10:06:24.167
-Audit.SharePoint
-AddedToGroup
-irfran.ali@1bhzkm.onmicrosoft.com
-121.52.155.178
-3
-91544
-
-Aug 9, 2025 @ 10:06:24.155
-Audit.SharePoint
-SharingSet
-irfran.ali@1bhzkm.onmicrosoft.com
-121.52.155.178
-3
-91544
-
-Aug 9, 2025 @ 10:06:24.144
-Audit.SharePoint
-SharingInheritanceBroken
-irfran.ali@1bhzkm.onmicrosoft.com
-121.52.155.178
-3
-91544
-
-Aug 9, 2025 @ 10:06:24.133
-Audit.SharePoint
-AddedToGroup
-irfran.ali@1bhzkm.onmicrosoft.com
-
-
-
-121.52.155.178
-3
-91544
-
-Aug 9, 2025 @ 10:06:24.124
-Audit.SharePoint
-SharingSet
-irfran.ali@1bhzkm.onmicrosoft.com
-121.52.155.178
-3
-91544
-
-Aug 9, 2025 @ 10:06:24.117
-Audit.SharePoint
-CompanyLinkCreated
-irfran.ali@1bhzkm.onmicrosoft.com
-121.52.155.178
-3
-91544
-
-Aug 9, 2025 @ 10:06:24.103
-Audit.SharePoint
-SharingLinkCreated
-irfran.ali@1bhzkm.onmicrosoft.com
-121.52.155.178
-3
-91544
-
-Aug 9, 2025 @ 10:06:24.088
-Audit.SharePoint
-SharingSet
-irfran.ali@1bhzkm.onmicrosoft.com
-121.52.155.178
-3
-91544
-
-Aug 9, 2025 @ 10:06:24.071
-Audit.SharePoint
-FileAccessed
-irfran.ali@1bhzkm.onmicrosoft.com
-121.52.155.178
-3
-91537
-
-Aug 9, 2025 @ 10:06:24.053
-Audit.SharePoint
-FileAccessed
-irfran.ali@1bhzkm.onmicrosoft.com
-121.52.155.178
-3
-91537
-
-Aug 9, 2025 @ 10:06:17.258
-Audit.AzureActiveDirectory
-UserLoggedIn
-Irfran.Ali@1bhzkm.onmicrosoft.com
-121.52.155.178
-3
-91545
-
-Aug 9, 2025 @ 10:06:17.247
-Audit.AzureActiveDirectory
-UserLoggedIn
-Irfran.Ali@1bhzkm.onmicrosoft.com
-121.52.155.178
-
-
-  * **Common Errors:**
-      * **"Invalid client secret provided"**: This means you've used the Client Secret ID instead of the Client Secret Value. You must generate a new secret and copy its value.
-      * **"Tenant does not exist"**: This usually indicates that the `tenant_id` and `client_id` have been swapped in the configuration. Double-check that they are in the correct fields.
-  * **API Latency:** Be aware that it can take several minutes for a new event in Office 365 to become available to the API. If you perform an action, it may not appear in Wazuh for 5-10 minutes or more.
-
-### 6\. Understanding the Office 365 Logs
-
-The logs collected by this integration are **audit logs**. This means they provide a record of who did what, and when, for security and compliance purposes. They **do not** contain sensitive content like the body of an email or the content of a file.
-
-Instead, the logs will show granular details such as:
-
-  * **Exchange:** `Send`, `Delete`, and `MailItemsAccessed` operations, along with the user and timestamp.
-  * **SharePoint/OneDrive:** `FileUploaded`, `FileDeleted`, `SharingSet`, and `FileAccessed` events.
-  * **Azure Active Directory:** `UserLoggedIn`, `UserPasswordChanged`, and administrative changes.
-
-This information is sufficient for detecting suspicious activity and responding to security incidents within your cloud environment.
+These logs allow you to detect suspicious activity and investigate incidents without exposing private content.
