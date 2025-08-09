@@ -43,7 +43,9 @@ The application serves as Wazuh's identity for secure authentication.
 1.  Sign in to the **Microsoft Azure portal**.
 2.  In the search bar, type `App registrations` and select it.
 3.  Click **New registration**.
+![office365-integration-new-registration](image.png)
 4.  **Name:** Provide a descriptive name like `Wazuh-Office365-Integration`.
+![office365-integration-registration](image-1.png)
 5.  **Supported account types:** Select the default option, `Single tenant`.
 6.  Click **Register**.
 
@@ -54,6 +56,7 @@ After registration, you will be directed to the application's overview page. Thi
 1.  Copy the **Application (client) ID**. This is the unique identifier for your app.
 2.  Copy the **Directory (tenant) ID**. This is the unique identifier for your organization.
 3.  Save these values securely.
+![office365-integration-creds](image-2.png)
 
 #### Step 1.4: Create a Client Secret
 
@@ -61,9 +64,11 @@ A client secret acts as a password for your application.
 
 1.  On the app's left-hand menu, navigate to **Certificates & secrets**.
 2.  Under "Client secrets," click **New client secret**.
+![office365-integration-client-secret](image-3.png)
 3.  Add a description (e.g., `Wazuh API Secret`) and choose an expiration period.
 4.  Click **Add**.
 5.  Immediately after creation, a `Value` will be displayed. **This is the only time you can copy this value.** Copy it and save it securely.
+![office365-client-secret-creds](image-4.png)
 
 #### Step 1.5: Grant API Permissions
 
@@ -74,6 +79,7 @@ This step grants your application permission to read Office 365 audit logs.
 3.  Select the **Office 365 Management APIs**.
 4.  Choose **Application permissions**.
 5.  Check the boxes for `ActivityFeed.Read` and `ActivityFeed.ReadDlp`.
+![office365-integration-API-permission](image-5.png)
 6.  Click **Add permissions**.
 7.  Finally, click the **Grant admin consent for <your_tenant_name>** button. This is a critical step to activate the permissions.
 
