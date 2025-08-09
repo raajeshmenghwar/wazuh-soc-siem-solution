@@ -149,7 +149,8 @@ sudo systemctl restart wazuh-manager
 
   At this point, you should start to see events being digested in the events dashboard.
 
-Now, log in to tenant, you must have differnt atleast two user account if not create them, and then open an incogition and log in to that accounts, let's say, I've four accounts in my tenant, that are tahir, ifran, rkum4r, 
+Now, log in to tenant https://entra.microsoft.com/ , you must have differnt atleast two user account if not create them, and then open an incogition and log in to that accounts, let's say, I've four accounts in my tenant, that are tahir, ifran, rkum4r and jawad.
+
 
   * **Common Errors:**
       * **"Invalid client secret provided"**: This means you've used the Client Secret ID instead of the Client Secret Value. You must generate a new secret and copy its value.
