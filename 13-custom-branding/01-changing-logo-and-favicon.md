@@ -46,3 +46,6 @@ sudo systemctl restart wazuh-dashboard
 ```
 
 This restarts the dashboard service so it can load the new logo.
+
+**📖 Read Next:** [13 – Customizing Login Page](../13-custom-branding/02-customizing-login-page.md) — Personalizing the login screen.
+

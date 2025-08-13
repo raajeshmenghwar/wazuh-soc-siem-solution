@@ -162,3 +162,5 @@ The `ossec.conf` file uses XML format. Think of `<ossec_config>` as a parent con
 
 **Impact:**  
 Changes in `ossec.conf` directly affect alerting, agent behavior, and what appears in the dashboard. Always back up before editing and test after changes.
+
+**📖 Read Next:** [03 – SSL Setup](../03-configuration/ssl-setup.md) — Securing Wazuh communications with SSL/TLS.

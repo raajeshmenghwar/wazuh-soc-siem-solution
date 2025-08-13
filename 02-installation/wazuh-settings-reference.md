@@ -163,3 +163,4 @@ Wazuh loads rule files, decoders, and `ossec.conf` only at startup. If you make 
 
 This file serves as a quick reference for configuring and managing Wazuh. If you're stuck, check logs, validate XML syntax, and go step by step.
 
+**📖 Read Next:** [03 – Agent Authentication](../03-configuration/agent-authentication.md) — Setting up and authenticating agents.

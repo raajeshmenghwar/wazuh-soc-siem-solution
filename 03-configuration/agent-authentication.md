@@ -151,3 +151,5 @@ If using Wazuh 4.x+ with the built-in dashboard, agents can be registered via th
 For more details, see the official Wazuh documentation:
 [Wazuh Agent Authentication Guide](https://documentation.wazuh.com/current/user-manual/agents/agent-auth.html)
 
+
+**📖 Read Next:** [03 – OSSEC Configuration Guide](../03-configuration/ossec-configuration-guide.md) — Understanding OSSEC rules, decoders, and configuration in Wazuh.

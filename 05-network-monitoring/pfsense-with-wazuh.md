@@ -122,9 +122,7 @@ Before proceeding, ensure the following environment is in place:
 In the **Remote Log Servers** field, input your Wazuh Manager IP and the syslog port:
 
 ```
-
 192.168.1.10:514
-
 ````
 
 > The port `514/UDP` is the default for syslog messages.
@@ -178,9 +176,10 @@ Click **Save** to apply the configuration.
 </remote>
 ````
 
-> Replace the values:
-> * `allowed-ips`: Subnet from which pfSense will send logs (e.g., `192.168.1.0/24`)
-> * `local_ip`: Wazuh Manager's IP address
+ Replace the values:
+
+ * `allowed-ips`: Subnet from which pfSense will send logs (e.g., `192.168.1.0/24`)
+ * `local_ip`: Wazuh Manager's IP address
 
 5. Click **Save**, then **Restart Manager** and confirm.
 
@@ -220,3 +219,5 @@ By integrating **pfSense** with **Wazuh**, you have created a streamlined and ce
 * [Deep Dive into Firewalls (Rajesh Menghwar - Medium)](https://medium.com/@rajeshmenghwar)
 * [GitHub: Working with Firewalls - pfSense](https://github.com/raajeshmenghwar/working-with-firewalls/tree/main/pfsense)
 
+
+**📖 Read Next:** [05 – Suricata IDS Integration](../05-network-monitoring/suricata-ids-integration.md) — Integrating Suricata IDS for network threat detection.

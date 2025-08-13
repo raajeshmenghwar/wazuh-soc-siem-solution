@@ -169,3 +169,5 @@ INFO: Secure connection established with agent '192.168.1.150'
 * Always verify logs to confirm successful handshake.
 
 For further help, visit the [official Wazuh SSL guide](https://documentation.wazuh.com/current/user-manual/agents/agent-connection.html#secure-connection).
+
+**📖 Read Next:** [04 – Office 365 Logs Integration](../04-log-sources/office365-logs-integration.md) — Collecting and parsing Office 365 logs in Wazuh.

@@ -43,3 +43,4 @@ Sometimes a hard refresh (`Ctrl + Shift + R`) is required. If issues persist:
 sudo systemctl restart wazuh-dashboard
 ````
 
+**📖 Read Next:** [13 – Modifying Application Title & Header](../13-custom-branding/05-modifying-application-title-and-header.md) — Updating page titles and headers.

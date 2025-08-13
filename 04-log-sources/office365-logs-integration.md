@@ -263,3 +263,5 @@ Examples of common categories:
 `UserLoggedIn`, `UserPasswordChanged`, admin changes.
 
 These logs allow you to detect suspicious activity and investigate incidents without exposing private content.
+
+**📖 Read Next:** [05 – pfSense with Wazuh](../05-network-monitoring/pfsense-with-wazuh.md) — Firewall log collection with pfSense.

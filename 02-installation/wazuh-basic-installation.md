@@ -1,4 +1,4 @@
-# **Wazuh SIEM Installation Guide (Wazuh 4.x+ All-in-One)**
+# **Wazuh SIEM Installation Guide**
 
 ## **Overview**
 
@@ -9,8 +9,6 @@ With the release of **version 4.x and above**, Wazuh introduced a **fully integr
 * **Wazuh Manager**: Collects, analyzes, and correlates logs and events.
 * **Wazuh Indexer**: Efficiently stores and indexes data (built on OpenSearch; replaces Elasticsearch).
 * **Wazuh Dashboard**: A powerful web-based interface for managing alerts and visualizing security data (replaces Kibana).
-
----
 
 ## **Highly Recommended: Quick All-in-One Installation (Ideal for Labs and Quick Deployments)**
 
@@ -47,8 +45,6 @@ sudo ./wazuh-install.sh --wazuh-manager --indexer --dashboard
 
 📘 [Quick Install Script – Official Docs](https://documentation.wazuh.com/current/installation-guide/wazuh-installation-packages/wazuh-install-script.html)
 
----
-
 ## **Why No More Separate Kibana/Elasticsearch?**
 
 Wazuh 4.x+ ships with its **own indexer and dashboard**, removing the need to manually install or configure Elasticsearch and Kibana. This ensures:
@@ -65,7 +61,6 @@ Wazuh 4.x+ ships with its **own indexer and dashboard**, removing the need to ma
 | Updates           | Separate per component     | Unified update management     |
 | Support Scope     | Partial                    | Full (end-to-end Wazuh stack) |
 
----
 
 ## **Alternative Manual Installation (Advanced/Production Customization)**
 
@@ -82,7 +77,6 @@ sudo apt-get update
 
 [Repository Setup – Official Docs](https://documentation.wazuh.com/current/installation-guide/packages-list.html)
 
----
 
 ### **Step 2: Install Core Components**
 
@@ -96,8 +90,6 @@ sudo apt-get install wazuh-manager wazuh-indexer wazuh-dashboard
 * `wazuh-indexer`: Stores and searches event data (OpenSearch backend).
 * `wazuh-dashboard`: Web UI for visualization and configuration.
 
----
-
 ###  **Step 3: Start and Enable Services**
 
 ```bash
@@ -105,8 +97,6 @@ sudo systemctl enable --now wazuh-manager
 sudo systemctl enable --now wazuh-indexer
 sudo systemctl enable --now wazuh-dashboard
 ```
-
----
 
 ### **Step 4: Access the Dashboard**
 
@@ -121,8 +111,6 @@ Change password securely using:
 /usr/share/wazuh-dashboard/plugins/wazuh/wazuh-passwords-tool.sh -a
 ```
 
----
-
 ##  **Troubleshooting Tips**
 
 | Problem                          | Recommended Action                                         |
@@ -131,8 +119,6 @@ Change password securely using:
 | Dashboard not accessible         | Confirm port `5601` is open and no firewall is blocking it |
 | Port conflicts                   | Check if ports `1514/1515`, `9200`, or `5601` are in use   |
 | Certificate issues (self-signed) | Use provided defaults or upload custom certs in production |
-
----
 
 ## **Alternative Installation Methods (For Testing/Labs)**
 
@@ -146,8 +132,6 @@ Deploy Wazuh components quickly using Docker Compose. Suitable for CI/CD, dev, o
 
 Download a pre-configured VirtualBox/VMware appliance for plug-and-play deployment.
 
----
-
 ## **References & Resources**
 
 * [Official Wazuh Documentation](https://documentation.wazuh.com/current/index.html)
@@ -155,3 +139,6 @@ Download a pre-configured VirtualBox/VMware appliance for plug-and-play deployme
 * [All-in-One Installation Guide](https://documentation.wazuh.com/current/installation-guide/all-in-one/index.html)
 * [Distributed Architecture Guide](https://documentation.wazuh.com/current/installation-guide/distributed-deployment/index.html)
 
+---
+
+**📖 Read Next:** [02 – Wazuh Settings Reference](../02-installation/wazuh-settings-reference.md) — Explanation of key configuration parameters.

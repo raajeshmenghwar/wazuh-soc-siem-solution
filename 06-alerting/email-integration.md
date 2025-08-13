@@ -158,4 +158,4 @@ The default Wazuh alert emails are plaintext and not well-formatted. For a more 
 
 ---
 
-Continue with [Slack Integration](03_slack_integration.md) or [Telegram Bot Integration](04_telegram_integration.md) for multi-channel alerts.
+**📖 Read Next:** [06 – Slack Integration](../06-alerting/slack-integration.md) — Sending alerts to Slack channels.

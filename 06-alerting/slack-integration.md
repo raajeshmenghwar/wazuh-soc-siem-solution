@@ -239,3 +239,4 @@ sudo mv /var/ossec/active-response/bin/slack-alert.sh.disabled /var/ossec/active
 * [Wazuh Official Documentation](https://documentation.wazuh.com/)
 * [How to Integrate Wazuh with Slack Webhooks for Real-Time Security Alerts](https://ithardenup.com/how-to-integrate-wazuh-with-slack-webhooks-for-real-time-security-alerts/)
 
+**📖 Read Next:** [07 – Multi-Tenancy](../07-dashboarding/multi-tenancy.md) — Setting up multiple tenants for separate teams or clients.

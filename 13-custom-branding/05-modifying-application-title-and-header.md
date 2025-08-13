@@ -56,3 +56,5 @@ sudo systemctl restart wazuh-dashboard
 ```
 
 The changes should be visible immediately after restart.
+
+**✅ You’ve completed the Wazuh SOC & SIEM learning path!** 🎉

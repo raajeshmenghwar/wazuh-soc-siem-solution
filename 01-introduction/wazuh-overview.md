@@ -136,3 +136,5 @@ Wazuh is a powerful and flexible SIEM solution that grows with your needs. It im
 
 Whether you're a student building a SOC lab or an organization protecting cloud workloads — Wazuh is an ideal starting point for modern cybersecurity operations.
 
+
+**Read Next:** [02 – Installation](../02-installation/wazuh-basic-installation.md)

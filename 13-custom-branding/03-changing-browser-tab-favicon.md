@@ -57,3 +57,6 @@ sudo systemctl restart wazuh-dashboard
 The new favicon should now appear in your browser tab.
 
 ![Favicon Changed](../assets/favicon-changed.png)
+
+
+**📖 Read Next:** [13 – App Settings Logos](../13-custom-branding/04-app-settings-logos.md) — Modifying in-app logos.

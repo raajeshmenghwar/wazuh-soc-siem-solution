@@ -59,3 +59,4 @@ Refer to individual integration files for step-by-step instructions on each inte
 
 ---
 
+**📖 Read Next:** [06 – Email Integration](../06-alerting/email-integration.md) — Sending alerts via email.

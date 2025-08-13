@@ -281,3 +281,4 @@ After validating Suricata integration:
 * Consider extending to perimeter devices (e.g., pfSense, network firewalls)
 * Monitor performance impact on high-throughput nodes
 
+**📖 Read Next:** [06 – Alerting Overview](../06-alerting/alerting-overview.md) — How Wazuh generates and processes alerts.

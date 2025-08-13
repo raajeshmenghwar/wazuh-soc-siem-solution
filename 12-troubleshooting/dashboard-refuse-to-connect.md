@@ -98,3 +98,5 @@ https://<VM_IP_Address>
 
 * [Wazuh Documentation – Dashboard Configuration](https://documentation.wazuh.com/)
 * [Wazuh GitHub](https://github.com/wazuh/wazuh)
+
+**📖 Read Next:** [13 – Changing Logo & Favicon](../13-custom-branding/01-changing-logo-and-favicon.md) — Replacing default Wazuh branding.
