@@ -8,62 +8,52 @@ Whether you are a **SOC Analyst**, **SIEM Engineer**, or a **cybersecurity learn
 
 The repository follows a **logical learning path**:
 
-1. **Introduction** → Understand what Wazuh is and its role in a SOC.
-2. **Installation** → Get Wazuh up and running.
-3. **Configuration** → Fine-tune Wazuh for your environment.
-4. **Log Sources** → Integrate external data sources.
-5. **Network Monitoring** → IDS/IPS and firewall integrations.
-6. **Alerting** → Enable and customize alerts.
-7. **Dashboarding** → Create multi-tenant dashboards and custom views.
-8. **Threat Intelligence** → Integrate with external threat feeds.
-9. **Incident Response** → Build workflows and manage incidents.
-10. **Hardening & Security** → Secure and optimize your SOC deployment.
-11. **Automation** → Automate repetitive tasks.
-12. **Troubleshooting** → Resolve common Wazuh issues.
-13. **Custom Branding** → Personalize the Wazuh interface for your organization.
+![Learning-Path-Repo](./assets/Repo-Structure.png)
 
 ## 📂 Repository Structure & Contents
 
-### 01 — Introduction
-* [Wazuh Overview](01-introduction/wazuh-overview.md) — Introduction to Wazuh, its components, and its role in a SOC.
-### 02 — Installation
-* [Wazuh Basic Installation](02-installation/wazuh-basic-installation.md) — Step-by-step installation for lab or production.
-* [Wazuh Settings Reference](02-installation/wazuh-settings-reference.md) — Explanation of key configuration parameters.
-### 03 — Configuration
-* [Agent Authentication](03-configuration/agent-authentication.md) — Setting up and authenticating agents.
-* [OSSEC Configuration Guide](03-configuration/ossec-configuration-guide.md) — Understanding OSSEC rules, decoders, and configuration in Wazuh.
-* [SSL Setup](03-configuration/ssl-setup.md) — Securing Wazuh communications with SSL/TLS.
-### 04 — Log Sources
-* [Office 365 Logs Integration](04-log-sources/office365-logs-integration.md) — Collecting and parsing Office 365 logs in Wazuh.
-### 05 — Network Monitoring
-* [pfSense with Wazuh](05-network-monitoring/pfsense-with-wazuh.md) — Firewall log collection with pfSense.
-* [Suricata IDS Integration](05-network-monitoring/suricata-ids-integration.md) — Integrating Suricata IDS for network threat detection.
-### 06 — Alerting
-* [Alerting Overview](06-alerting/alerting-overview.md) — How Wazuh generates and processes alerts.
-* [Email Integration](06-alerting/email-integration.md) — Sending alerts via email.
-* [Slack Integration](06-alerting/slack-integration.md) — Sending alerts to Slack channels.
-### 07 — Dashboarding
-* [Multi-Tenancy](07-dashboarding/multi-tenancy.md) — Setting up multiple tenants for separate teams or clients.
-### 08 — Threat Intelligence
-* [Threat Intelligence Overview](08-threat-intelligence/01-threat-intelligence-overview.md) — Understanding TI in Wazuh.
-* [AbuseIPDB Integration](08-threat-intelligence/abuseipdb-integration.md) — Blocking known malicious IPs.
-* [Shodan.io Integration](08-threat-intelligence/shodan.io-integration.md) — Using Shodan data to enhance detections.
-* [VirusTotal Integration](08-threat-intelligence/virustotal-integration.md) — File and hash reputation lookups.
-### 09 — Incident Response
-* [Security Incident Response Overview](09-incident-response/security-incident-response-overview.md) — SOC response process.
-* [TheHive Integration](09-incident-response/thehive-integration.md) — Managing incidents with TheHive.
-### 10 — Hardening & Security
-* *(Placeholder)* — Best practices for securing your Wazuh environment.
-### 11 — Automation
-* *(Placeholder)* — Scripts and workflows for automating Wazuh tasks.
-### 12 — Troubleshooting
-* [Dashboard Refuse to Connect](12-troubleshooting/dashboard-refuse-to-connect.md) — Fixing the “Dashboard Refused to Connect” error.
-### 13 — Custom Branding
-* [Changing Logo & Favicon](13-custom-branding/01-changing-logo-and-favicon.md) — Replacing default Wazuh branding.
-* [Customizing Login Page](13-custom-branding/02-customizing-login-page.md) — Personalizing the login screen.
-* [Changing Browser Tab Favicon](13-custom-branding/03-changing-browser-tab-favicon.md) — Updating the browser tab icon.
-* [App Settings Logos](13-custom-branding/04-app-settings-logos.md) — Modifying in-app logos.
-* [Modifying Application Title & Header](13-custom-branding/05-modifying-application-title-and-header.md) — Updating page titles and headers.
+![Architecture](./assets/Indus-Systems-SIEM-Solution.png)
+
+* **01: Introduction**
+  * [Wazuh Overview](01-introduction/wazuh-overview.md): Introduction to Wazuh, its components, and its role in a SOC.
+* **02: Installation**
+  * [Wazuh Basic Installation](02-installation/wazuh-basic-installation.md): Step-by-step installation for lab or production.
+  * [Wazuh Settings Reference](02-installation/wazuh-settings-reference.md): Explanation of key configuration parameters.
+* **03: Configuration**
+  * [Agent Authentication](03-configuration/agent-authentication.md): Setting up and authenticating agents.
+  * [OSSEC Configuration Guide](03-configuration/ossec-configuration-guide.md): Understanding OSSEC rules, decoders, and configuration in Wazuh.
+  * [SSL Setup](03-configuration/ssl-setup.md): Securing Wazuh communications with SSL/TLS.
+* **04: Log Sources**
+  * [Office 365 Logs Integration](04-log-sources/office365-logs-integration.md): Collecting and parsing Office 365 logs in Wazuh.
+* **05: Network Monitoring**
+  * [pfSense with Wazuh](05-network-monitoring/pfsense-with-wazuh.md): Firewall log collection with pfSense.
+  * [Suricata IDS Integration](05-network-monitoring/suricata-ids-integration.md): Integrating Suricata IDS for network threat detection.
+* **06: Alerting**
+  * [Alerting Overview](06-alerting/alerting-overview.md): How Wazuh generates and processes alerts.
+  * [Email Integration](06-alerting/email-integration.md): Sending alerts via email.
+  * [Slack Integration](06-alerting/slack-integration.md): Sending alerts to Slack channels.
+* **07: Dashboarding**
+  * [Multi-Tenancy](07-dashboarding/multi-tenancy.md): Setting up multiple tenants for separate teams or clients.
+* **08: Threat Intelligence**
+  * [Threat Intelligence Overview](08-threat-intelligence/01-threat-intelligence-overview.md): Understanding TI in Wazuh.
+  * [AbuseIPDB Integration](08-threat-intelligence/abuseipdb-integration.md): Blocking known malicious IPs.
+  * [Shodan.io Integration](08-threat-intelligence/shodan.io-integration.md): Using Shodan data to enhance detections.
+  * [VirusTotal Integration](08-threat-intelligence/virustotal-integration.md): File and hash reputation lookups.
+* **09: Incident Response**
+  * [Security Incident Response Overview](09-incident-response/security-incident-response-overview.md): SOC response process.
+  * [TheHive Integration](09-incident-response/thehive-integration.md): Managing incidents with TheHive.
+* **10: Hardening & Security**
+  * *(Placeholder)*: Best practices for securing your Wazuh environment.
+* **11: Automation**
+  * *(Placeholder)*: Scripts and workflows for automating Wazuh tasks.
+* **12: Troubleshooting**
+  * [Dashboard Refuse to Connect](12-troubleshooting/dashboard-refuse-to-connect.md): Fixing the “Dashboard Refused to Connect” error.
+* **13: Custom Branding**
+  * [Changing Logo & Favicon](13-custom-branding/01-changing-logo-and-favicon.md): Replacing default Wazuh branding.
+  * [Customizing Login Page](13-custom-branding/02-customizing-login-page.md): Personalizing the login screen.
+  * [Changing Browser Tab Favicon](13-custom-branding/03-changing-browser-tab-favicon.md): Updating the browser tab icon.
+  * [App Settings Logos](13-custom-branding/04-app-settings-logos.md): Modifying in-app logos.
+  * [Modifying Application Title & Header](13-custom-branding/05-modifying-application-title-and-header.md): Updating page titles and headers.
 
 ## 📸 Final SOC Setup — Screenshots
 
@@ -103,3 +93,6 @@ Find me in the wild:
 - [LinkedIn – Professional Footprint](https://www.linkedin.com/in/raajeshmenghwar/)
 - [Medium – Write-ups & Case Files](https://medium.com/@rajeshmenghwar)
 - [GitHub – Code & Experiments](https://github.com/raajeshmenghwar)
+
+
+

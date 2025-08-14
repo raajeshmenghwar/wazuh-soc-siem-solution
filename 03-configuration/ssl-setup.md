@@ -2,8 +2,6 @@
 
 This guide explains how to configure secure SSL/TLS communication between the Wazuh Manager and its agents using either self-signed or CA-issued certificates.
 
----
-
 ## Why SSL Matters
 
 Using SSL/TLS for manager-agent communication ensures:
@@ -11,8 +9,6 @@ Using SSL/TLS for manager-agent communication ensures:
 - **Confidentiality:** Encrypts all data exchanged between agents and the manager, protecting it from interception.
 - **Authenticity:** Ensures that both the agent and manager can verify each other's identities, preventing impersonation.
 - **Integrity:** Detects tampering or corruption of transferred data.
-
----
 
 ## Self-Signed vs CA-Issued Certificates
 
@@ -23,7 +19,6 @@ Using SSL/TLS for manager-agent communication ensures:
 
 > *For lab setups, self-signed certificates are usually sufficient.*
 
----
 
 ## Certificate Storage Path
 
@@ -43,8 +38,6 @@ Recommended structure:
 └── ca.pem               (optional for CA trust)
 ````
 
----
-
 ## Generating a Self-Signed Certificate (Manager Side)
 
 1. Create the SSL directory (if not already present):
@@ -63,9 +56,7 @@ openssl req -x509 -nodes -days 365 \
   -subj "/C=PK/ST=Sindh/L=Khairpur/O=SOC Lab/OU=CyberSec/CN=wazuh-manager.local"
 ```
 
-> Keep your private key (`manager-key.pem`) **secure and readable only by root**.
-
----
+> Keep your private key (`manager-key.pem`) **secure and readable only by root**
 
 ## Configuring `ossec.conf` for SSL
 
@@ -99,7 +90,6 @@ Edit `/var/ossec/etc/ossec.conf` to trust the manager’s cert:
 
 > ⚠️ Copy `manager-cert.pem` from the manager to each agent’s `/var/ossec/etc/sslmanager/` directory.
 
----
 
 ## Restart Services
 
@@ -116,8 +106,6 @@ sudo systemctl restart wazuh-manager
 ```bash
 sudo systemctl restart wazuh-agent
 ```
-
----
 
 ## Verifying the Connection
 
@@ -137,8 +125,6 @@ Look for log lines like:
 INFO: Secure connection established with agent '192.168.1.150'
 ```
 
----
-
 ## Troubleshooting SSL Issues
 
 | Issue                            | Cause                                  | Solution                                    |
@@ -148,8 +134,6 @@ INFO: Secure connection established with agent '192.168.1.150'
 | `Connection refused`             | Firewall or wrong port                 | Ensure port 1514 is open and in use         |
 | Agent not appearing in dashboard | Cert accepted but communication failed | Restart both agent and manager; review logs |
 
----
-
 ## Optional: Using CA-Issued Certificates
 
 1. Generate a **Certificate Signing Request (CSR)**.
@@ -158,8 +142,6 @@ INFO: Secure connection established with agent '192.168.1.150'
 4. Place certs in `/var/ossec/etc/sslmanager/` and update paths in `ossec.conf` on both sides.
 
 > This is more secure and scalable for production deployments.
-
----
 
 ## Summary
 

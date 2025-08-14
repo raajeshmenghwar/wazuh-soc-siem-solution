@@ -4,16 +4,12 @@
 
 In a modern **Security Operations Center (SOC)**, Wazuh acts like a digital surveillance system—continuously collecting, analyzing, and alerting on suspicious behavior across servers, endpoints, cloud instances, and more.
 
----
-
 ## What is Wazuh?
 
 Imagine hiring a smart security guard for every computer in your company. These guards not only report strange behavior but also track system changes, malware attempts, and compliance violations. That’s Wazuh.
 
 In short:
 **Wazuh = real-time security monitoring + alerting + compliance + incident response — all in one.**
-
----
 
 ## Wazuh in a SOC
 
@@ -23,8 +19,6 @@ In a SOC environment, Wazuh helps security teams:
 * Detect intrusions, vulnerabilities, malware, and misconfigurations
 * Comply with regulatory standards like PCI-DSS, HIPAA, GDPR
 * Respond to incidents with automated alerts and playbooks
-
----
 
 ## Wazuh Architecture
 
@@ -51,8 +45,6 @@ Simple analogy:
 * Filebeat = Data courier
 * Elasticsearch = Data archive
 * Kibana = Monitoring screens
-
----
 
 ## Wazuh Components
 
@@ -102,8 +94,6 @@ Visualization Interface
 * Enables threat hunting, forensic analysis, and reporting
 * Analogy: The TV wall where the SOC team monitors all activity
 
----
-
 ## Real-World Use Cases of Wazuh
 
 Wazuh can help SOC teams with:
@@ -116,8 +106,6 @@ Wazuh can help SOC teams with:
 * Compliance Auditing – Automate checks for security benchmarks
 * Cloud Monitoring – Monitor AWS, Azure, and GCP environments
 
----
-
 ## Getting Started (The Flow)
 
 To build a Wazuh-powered SOC, follow this setup:
@@ -127,8 +115,6 @@ To build a Wazuh-powered SOC, follow this setup:
 3. Configure Filebeat to ship alerts to Elasticsearch
 4. Set up Elasticsearch or OpenSearch to store and query events
 5. Use Kibana or OpenSearch Dashboards for visualization and analysis
-
----
 
 ## Summary
 

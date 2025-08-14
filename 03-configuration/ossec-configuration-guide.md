@@ -1,9 +1,7 @@
-### Full breakdown of every major config block in ossec.conf
-#### Understanding the `ossec.conf` Structure
+### Understanding the `ossec.conf` Structure
+##### Breakdown of every major config block in ossec.conf
 
 The `ossec.conf` file uses XML format. Think of `<ossec_config>` as a parent container holding all configuration blocks (like folders inside a main folder). Each block is wrapped in tags (e.g., `<global>...</global>`). Tags must always be closed, and while indentation helps readability, the tag structure is what matters.
-
----
 
 ## `<global>`
 - **Purpose:** Controls general settings such as email notifications, timeouts, and log limits.
@@ -17,8 +15,6 @@ The `ossec.conf` file uses XML format. Think of `<ossec_config>` as a parent con
     ```
 - **Explanation:** Enables email alerts, sets recipient, and configures log verbosity.
 
----
-
 ## `<alerts>`
 - **Purpose:** Sets alert levels, log locations, and email frequency.
 - **Example:**
@@ -29,8 +25,6 @@ The `ossec.conf` file uses XML format. Think of `<ossec_config>` as a parent con
     </alerts>
     ```
 - **Explanation:** Only alerts above these levels are logged or emailed.
-
----
 
 ## `<remote>`
 - **Purpose:** Configures agent ↔ manager communication (IP, ports, modes).
@@ -43,8 +37,6 @@ The `ossec.conf` file uses XML format. Think of `<ossec_config>` as a parent con
     </remote>
     ```
 - **Explanation:** Sets secure communication on port 1514.
-
----
 
 ## `<active-response>`
 - **Purpose:** Automates responses (e.g., blocking IPs) using scripts.
@@ -59,8 +51,6 @@ The `ossec.conf` file uses XML format. Think of `<ossec_config>` as a parent con
     ```
 - **Explanation:** Runs `firewalldrop` locally for specific rule IDs.
 
----
-
 ## `<syscheck>`
 - **Purpose:** File integrity monitoring (what to watch, how often).
 - **Example:**
@@ -72,8 +62,6 @@ The `ossec.conf` file uses XML format. Think of `<ossec_config>` as a parent con
     ```
 - **Explanation:** Scans listed directories every hour.
 
----
-
 ## `<rootcheck>`
 - **Purpose:** Detects rootkits and system misconfigurations.
 - **Example:**
@@ -83,8 +71,6 @@ The `ossec.conf` file uses XML format. Think of `<ossec_config>` as a parent con
     </rootcheck>
     ```
 - **Explanation:** Enables rootkit file checks.
-
----
 
 ## `<localfile>`
 - **Purpose:** Monitors custom log files (e.g., Apache, auth logs).
@@ -97,8 +83,6 @@ The `ossec.conf` file uses XML format. Think of `<ossec_config>` as a parent con
     ```
 - **Explanation:** Watches `/var/log/auth.log` for syslog-formatted events.
 
----
-
 ## `<auth>`
 - **Purpose:** Controls agent authentication (useful for enrolling new agents).
 - **Example:**
@@ -108,8 +92,6 @@ The `ossec.conf` file uses XML format. Think of `<ossec_config>` as a parent con
     </auth>
     ```
 - **Explanation:** Enables agent authentication.
-
----
 
 ## `<cluster>` (if clustering is enabled)
 - **Purpose:** Configures master/worker nodes and sync settings.
@@ -122,15 +104,12 @@ The `ossec.conf` file uses XML format. Think of `<ossec_config>` as a parent con
     ```
 - **Explanation:** Sets up a cluster named `wazuh-cluster` as master.
 
----
-
 ### Do’s and Don'ts When Editing
 
 - Validate changes with `xmllint` or similar tools  
 - Don’t remove critical tags like `<rules>`  
 - Keep comments for custom sections for clarity
 
----
 
 ### Reference Table: Common Paths & Files
 
@@ -139,8 +118,6 @@ The `ossec.conf` file uses XML format. Think of `<ossec_config>` as a parent con
 | `<rules>`    | Loads detection rules   | `/var/ossec/ruleset/rules/`         |
 | `<decoders>` | Loads decoders          | `/var/ossec/etc/decoders/`          |
 | `<localfile>`| Custom log files        | `/var/log/auth.log`, etc.           |
-
----
 
 ### Visual Hierarchy Example
 
