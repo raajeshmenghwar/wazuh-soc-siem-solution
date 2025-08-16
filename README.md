@@ -10,7 +10,7 @@ The repository follows a **logical learning path**:
 
 ![Learning-Path-Repo](./assets/Repo-Structure.png)
 
-## 📂 Repository Structure & Contents
+## 📂 Project Architecture
 
 ![Architecture](./assets/Indus-Systems-SIEM-Solution.png)
 
@@ -55,7 +55,7 @@ The repository follows a **logical learning path**:
   * [App Settings Logos](13-custom-branding/04-app-settings-logos.md): Modifying in-app logos.
   * [Modifying Application Title & Header](13-custom-branding/05-modifying-application-title-and-header.md): Updating page titles and headers.
 
-## 📸 Final SOC Setup — Screenshots
+<!-- ## 📸 Final SOC Setup — Screenshots
 
 ### Wazuh Dashboard
 
@@ -67,7 +67,7 @@ The repository follows a **logical learning path**:
 
 ### Full SOC View
 
-![Full SOC Setup](assets/screenshots/full-soc-setup.png)
+![Full SOC Setup](assets/screenshots/full-soc-setup.png) -->
 
 ## 📚 Who This Is For
 - SOC Analysts setting up a lab.
